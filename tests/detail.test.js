@@ -33,3 +33,20 @@ test('failed replacement preserves the visible order and its mutation target',as
   assert.equal(node('detail-title').textContent,'ST-1 · Car 1');
   assert.equal(ctx.currentOrder.id,1);
 });
+
+test('closing detail invalidates a pending response before it can reopen',async()=>{
+ const {ctx,node,requests}=setup();
+ vm.runInContext(source.slice(source.indexOf('function invalidateDetail'),source.indexOf('async function load')),ctx);
+ const work=ctx.showOrder(1);requests.get('/api/orders/1/').resolve(order(1));await tick();
+ ctx.invalidateDetail();node('detail').open=false;
+ requests.get('/api/orders/1/history/').resolve([]);await work;
+ assert.equal(node('detail').open,false);assert.equal(ctx.currentOrder,null);
+});
+
+test('a failed read from an open dialog reports inside that dialog',async()=>{
+ const {ctx,node,requests}=setup();
+ vm.runInContext(source.slice(source.indexOf('function notice'),source.indexOf('async function load')),ctx);
+ node('detail').open=true;
+ const work=ctx.showOrder(2);requests.get('/api/orders/2/').reject(Error('network unavailable'));await work;
+ assert.equal(node('detail-notice').textContent,'network unavailable');assert.equal(node('notice').textContent,'');
+});

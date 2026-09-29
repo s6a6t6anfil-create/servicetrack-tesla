@@ -8,3 +8,8 @@ test('search recognizes exact order number and encodes text',()=>{assert.equal(s
 test('error presentation handles nested response',()=>{assert.equal(errorText({vin:['Помилка']}),'vin: Помилка');assert.equal(errorText('Відмова'),'Відмова');});
 import {input,area,select} from '../static/form-fields.js';
 test('form fields escape labels, values and option labels',()=>{assert.match(input('name','<name>','"x'),/&lt;name&gt;/);assert.match(area('notes','Текст','</textarea>'),/&lt;\/textarea&gt;/);assert.match(select('id','Обери',[{id:1,label:'<a>'}],1),/selected.*&lt;a&gt;/);});
+
+test('Ukrainian record count handles singular plural and teens', async()=>{
+ const {recordCount}=await import('../static/helpers.js');
+ for(const [n,word] of [[0,'записів'],[1,'запис'],[2,'записи'],[5,'записів'],[11,'записів'],[14,'записів'],[21,'запис'],[22,'записи'],[111,'записів']])assert.equal(recordCount(n),`${n} ${word}`);
+});

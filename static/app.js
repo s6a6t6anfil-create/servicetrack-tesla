@@ -1,6 +1,6 @@
 import {requestJSON} from './api.js';
 import {input,area,select} from './form-fields.js';
-import {escapeHTML as e, money, isOverdue, searchParams, errorText} from './helpers.js';
+import {escapeHTML as e, money, isOverdue, searchParams, errorText, recordCount} from './helpers.js';
 const $ = id => document.getElementById(id);
 let view='orders', session, currentPage=1, lastResult, currentOrder;
 const titles={orders:['Замовлення','Нове замовлення'],customers:['Клієнти','Новий клієнт'],vehicles:['Автомобілі','Новий автомобіль']};
@@ -8,13 +8,16 @@ const csrf=()=>document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))?.
 let pending=0, loadVersion=0, detailVersion=0;
 const api=(path,options={})=>requestJSON(path,options,{csrf:csrf(),onBusy:busy=>{pending+=busy?1:-1;$('busy').hidden=pending===0;}});
 const send=(url,data,method='POST')=>api(url,{method,body:JSON.stringify(data)});
-function notice(text){$('notice').textContent=text;}
+function notice(text){($('detail').open?$('detail-notice'):$('notice')).textContent=text;}
+function invalidateDetail(){detailVersion++;}
+$('detail').addEventListener('cancel',invalidateDetail);
+$('detail').addEventListener('close',()=>{if(!$('detail').open)invalidateDetail();});
 async function load(){
   const version=++loadVersion; const requestedView=view;
   $('prev').disabled=$('next').disabled=true;$('count').textContent='';
   $('content').innerHTML='<p class="empty">Завантаження…</p>';
   const p=searchParams(view,$('search').value,$('status-filter').value,$('overdue').checked);p.set('page',currentPage);
-  try{const result=await api(`/api/${requestedView}/?${p}`);if(version!==loadVersion)return;lastResult=result;render(lastResult.results);$('count').textContent=`${lastResult.count} записів · сторінка ${currentPage}`;$('prev').disabled=!lastResult.previous;$('next').disabled=!lastResult.next;}
+  try{const result=await api(`/api/${requestedView}/?${p}`);if(version!==loadVersion)return;lastResult=result;render(lastResult.results);$('count').textContent=`${recordCount(lastResult.count)} · сторінка ${currentPage}`;$('prev').disabled=!lastResult.previous;$('next').disabled=!lastResult.next;}
   catch(err){if(version!==loadVersion)return;$('content').innerHTML=`<p class="empty error">${e(err.message)}</p>`;$('stats').innerHTML='';}
 }
 const dateToday=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Europe/Kyiv'});
@@ -65,6 +68,7 @@ async function edit(record=null,kind=view){
 }
 async function showOrder(id){
   const version=++detailVersion;
+  $('detail-notice').textContent='';
   try{
     const o=await api(`/api/orders/${id}/`);
     if(version!==detailVersion)return;
@@ -88,8 +92,8 @@ $('content').addEventListener('click',async ev=>{const t=ev.target;try{
   if(t.dataset.open)await showOrder(t.dataset.open);
   if(t.dataset.edit)await edit(lastResult.results.find(x=>x.id===Number(t.dataset.edit)));
   if(t.dataset.delete&&confirm('Видалити запис? Запис із пов’язаними даними видалити неможливо.')){await api(`/api/${view}/${t.dataset.delete}/`,{method:'DELETE'});currentPage=1;await load();}
-  if(t.dataset.vehicleHistory){const history=await allOptions('orders',`?vehicle=${t.dataset.vehicleHistory}`);$('detail-title').textContent='Історія обслуговування';$('detail-content').innerHTML=history.map(o=>`<p><button data-history-order="${o.id}">${e(o.number)} · ${e(o.status_label)}</button> ${e(o.complaint)}</p>`).join('')||'<p>Замовлень поки немає.</p>';$('detail').showModal();for(const b of $('detail-content').querySelectorAll('[data-history-order]'))b.onclick=()=>showOrder(b.dataset.historyOrder);}
+  if(t.dataset.vehicleHistory){const version=++detailVersion;const history=await allOptions('orders',`?vehicle=${t.dataset.vehicleHistory}`);if(version!==detailVersion)return;$('detail-notice').textContent='';$('detail-title').textContent='Історія обслуговування';$('detail-content').innerHTML=history.map(o=>`<p><button data-history-order="${o.id}">${e(o.number)} · ${e(o.status_label)}</button> ${e(o.complaint)}</p>`).join('')||'<p>Замовлень поки немає.</p>';$('detail').showModal();for(const b of $('detail-content').querySelectorAll('[data-history-order]'))b.onclick=()=>showOrder(b.dataset.historyOrder);}
 }catch(err){notice(err.message);}});
 for(const b of document.querySelectorAll('[data-view]'))b.onclick=()=>{view=b.dataset.view;currentPage=1;for(const n of document.querySelectorAll('[data-view]')){n.classList.toggle('active',n===b);n.setAttribute('aria-current',n===b?'page':'false')};$('page-title').textContent=titles[view][0];$('create').textContent='+ '+titles[view][1];$('search').value='';$('status-filter').hidden=view!=='orders';$('overdue').parentElement.hidden=view!=='orders';$('page-description').textContent=view==='orders'?'Від першого звернення до видачі автомобіля.':view==='customers'?'Контакти та примітки про клієнтів майстерні.':'Автомобілі та історія їхнього обслуговування.';notice('');load();};
-$('create').onclick=()=>edit();$('filters').onsubmit=ev=>{ev.preventDefault();currentPage=1;load();};$('prev').onclick=()=>{currentPage--;load();};$('next').onclick=()=>{currentPage++;load();};$('close-dialog').onclick=$('cancel').onclick=()=>$('editor').close();$('close-detail').onclick=()=>$('detail').close();
+$('create').onclick=()=>edit();$('filters').onsubmit=ev=>{ev.preventDefault();currentPage=1;load();};$('prev').onclick=()=>{currentPage--;load();};$('next').onclick=()=>{currentPage++;load();};$('close-dialog').onclick=$('cancel').onclick=()=>$('editor').close();$('close-detail').onclick=()=>{invalidateDetail();$('detail').close();};
 try{session=await api('/api/session/');$('status-filter').innerHTML+=session.statuses.map(s=>`<option value="${e(s.value)}">${e(s.label)}</option>`).join('');await load();}catch(err){notice(err.message);}

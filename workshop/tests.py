@@ -142,3 +142,24 @@ class WorkshopTests(TestCase):
         self.client.force_authenticate(self.mechanic)
         response=self.client.post(f'/api/orders/{self.order.pk}/comment/',{'text':'Уточнення після видачі'},format='json')
         self.assertEqual(response.status_code,201)
+
+class LegacyDemoRepairTests(TestCase):
+    def test_repair_is_opt_in_scoped_and_idempotent(self):
+        from django.core.management import call_command
+        from io import StringIO
+        demo=Customer.objects.create(name='Demo',phone='000',notes='Вигадані демонстраційні дані')
+        real=Customer.objects.create(name='Other',phone='000')
+        a=Vehicle.objects.create(customer=demo,model='Model Y',year=2023,vin='DEMO0000000000001')
+        b=Vehicle.objects.create(customer=real,model='Model Y',year=2023,vin='DEMO0000000000002')
+        call_command('repair_demo_vins',stdout=StringIO());a.refresh_from_db();self.assertTrue(a.vin.startswith('DEMO'))
+        call_command('repair_demo_vins',apply=True,stdout=StringIO())
+        a.refresh_from_db();b.refresh_from_db();self.assertEqual(a.vin,'DEMX0000000000001');self.assertEqual(b.vin,'DEMO0000000000002')
+        call_command('repair_demo_vins',apply=True,stdout=StringIO());self.assertEqual(Vehicle.objects.count(),2)
+    def test_collision_leaves_all_rows_unchanged(self):
+        from django.core.management import call_command,CommandError
+        from io import StringIO
+        demo=Customer.objects.create(name='Demo',phone='000',notes='Вигадані демонстраційні дані')
+        for vin in ['DEMO0000000000001','DEMO0000000000002','DEMX0000000000002']:
+            Vehicle.objects.create(customer=demo,model='Model Y',year=2023,vin=vin)
+        with self.assertRaises(CommandError):call_command('repair_demo_vins',apply=True,stdout=StringIO())
+        self.assertEqual(Vehicle.objects.filter(vin__startswith='DEMO').count(),2)
