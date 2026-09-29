@@ -36,3 +36,7 @@
 - [BUG-005](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/9): Open; повний опис у [bugs/BUG-005.md](bugs/BUG-005.md).
 - [BUG-006](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/10): Open; повний опис у [bugs/BUG-006.md](bugs/BUG-006.md).
 - [BUG-007](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/11): Open; повний опис у [bugs/BUG-007.md](bugs/BUG-007.md).
+
+
+## Оновлення ПЗ30 — 29.09.2026
+BUG005–008 виправлено й перевірено в гілці fix/pz30-final-check; Issues9/10/11/15 відкриті до злиття. Докази та обсяг регресії: [ПЗ30](30-final-check.md). Попередні записи вище є історією виявлення.
