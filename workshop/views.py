@@ -15,6 +15,15 @@ from .models import Customer, Vehicle, Order, OrderItem, Event
 from .serializers import CustomerSerializer, VehicleSerializer, OrderSerializer, ItemSerializer, EventSerializer, StatusSerializer, CommentSerializer
 from .services import is_manager, change_status
 
+def parse_identifier(value, field):
+    # Reject Unicode digit lookalikes and values outside SQLite signed BIGINT.
+    if not value.isascii() or not value.isdecimal() or len(value) > 19:
+        raise ValidationError({field: 'Потрібне невід’ємне ціле число до 9223372036854775807.'})
+    number = int(value)
+    if number > 9223372036854775807:
+        raise ValidationError({field: 'Ідентифікатор перевищує допустимий діапазон.'})
+    return number
+
 class ManagerWrite(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and (request.method in permissions.SAFE_METHODS or is_manager(request.user))
@@ -48,9 +57,7 @@ class VehicleViewSet(ProtectedDeleteMixin, viewsets.ModelViewSet):
             qs = qs.filter(orders__mechanic=self.request.user).distinct()
         customer = self.request.query_params.get('customer')
         if customer:
-            if not customer.isdigit():
-                raise ValidationError({'customer': 'Потрібне ціле число.'})
-            qs = qs.filter(customer_id=customer)
+            qs = qs.filter(customer_id=parse_identifier(customer, 'customer'))
         return qs
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -69,14 +76,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             qs = qs.filter(due_date__lt=timezone.localdate()).exclude(status__in=['ready', 'delivered'])
         v = self.request.query_params.get('vehicle')
         if v:
-            if not v.isdigit():
-                raise ValidationError({'vehicle': 'Потрібне ціле число.'})
-            qs = qs.filter(vehicle_id=v)
+            qs = qs.filter(vehicle_id=parse_identifier(v, 'vehicle'))
         number = self.request.query_params.get('number', '').upper().replace('ST-', '')
         if number:
-            if not number.isdigit():
-                raise ValidationError({'number': 'Потрібен номер замовлення.'})
-            qs = qs.filter(pk=int(number))
+            qs = qs.filter(pk=parse_identifier(number, 'number'))
         return qs
 
     @transaction.atomic
