@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {escapeHTML,money,isOverdue,searchParams,errorText} from '../static/helpers.js';
+test('escape user data and null',()=>{assert.equal(escapeHTML('<script>"&'), '&lt;script&gt;&quot;&amp;');assert.equal(escapeHTML(null),'');});
+test('money supports zero, decimals and invalid values',()=>{assert.match(money('150.30'),/150,30/);assert.match(money(0),/0,00/);assert.equal(money('abc'),'—');});
+test('overdue excludes ready and delivered',()=>{assert.equal(isOverdue({due_date:'2026-09-28',status:'repair'},'2026-09-29'),true);for(const status of ['ready','delivered'])assert.equal(isOverdue({due_date:'2026-09-28',status},'2026-09-29'),false);assert.equal(isOverdue({due_date:'2026-09-29',status:'repair'},'2026-09-29'),false);});
+test('search recognizes exact order number and encodes text',()=>{assert.equal(searchParams('orders','ST-0001','repair',true).get('number'),'ST-0001');assert.equal(searchParams('customers',' A&B ','repair',true).toString(),'search=A%26B');});
+test('error presentation handles nested response',()=>{assert.equal(errorText({vin:['Помилка']}),'vin: Помилка');assert.equal(errorText('Відмова'),'Відмова');});
