@@ -1,23 +1,21 @@
+import {requestJSON} from './api.js';
 import {input,area,select} from './form-fields.js';
 import {escapeHTML as e, money, isOverdue, searchParams, errorText} from './helpers.js';
 const $ = id => document.getElementById(id);
 let view='orders', session, currentPage=1, lastResult, currentOrder;
 const titles={orders:['Замовлення','Нове замовлення'],customers:['Клієнти','Новий клієнт'],vehicles:['Автомобілі','Новий автомобіль']};
 const csrf=()=>document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))?.split('=')[1];
-async function api(path, options={}){
-  const response=await fetch(path,{...options,headers:{'Content-Type':'application/json','X-CSRFToken':csrf(),...options.headers}});
-  if(response.status===204)return null;
-  let data;try{data=await response.json();}catch{throw Error('Не вдалося прочитати відповідь сервера. Онови сторінку.');}
-  if(!response.ok)throw Error(response.status===403?'Доступ заборонено або сесія завершилася. Перевір свої права чи увійди знову.':errorText(data));
-  return data;
-}
+let pending=0, loadVersion=0, detailVersion=0;
+const api=(path,options={})=>requestJSON(path,options,{csrf:csrf(),onBusy:busy=>{pending+=busy?1:-1;$('busy').hidden=pending===0;}});
 const send=(url,data,method='POST')=>api(url,{method,body:JSON.stringify(data)});
 function notice(text){$('notice').textContent=text;}
 async function load(){
+  const version=++loadVersion; const requestedView=view;
+  $('prev').disabled=$('next').disabled=true;$('count').textContent='';
   $('content').innerHTML='<p class="empty">Завантаження…</p>';
   const p=searchParams(view,$('search').value,$('status-filter').value,$('overdue').checked);p.set('page',currentPage);
-  try{lastResult=await api(`/api/${view}/?${p}`);render(lastResult.results);$('count').textContent=`${lastResult.count} записів · сторінка ${currentPage}`;$('prev').disabled=!lastResult.previous;$('next').disabled=!lastResult.next;}
-  catch(err){$('content').innerHTML=`<p class="empty error">${e(err.message)}</p>`;$('stats').innerHTML='';}
+  try{const result=await api(`/api/${requestedView}/?${p}`);if(version!==loadVersion)return;lastResult=result;render(lastResult.results);$('count').textContent=`${lastResult.count} записів · сторінка ${currentPage}`;$('prev').disabled=!lastResult.previous;$('next').disabled=!lastResult.next;}
+  catch(err){if(version!==loadVersion)return;$('content').innerHTML=`<p class="empty error">${e(err.message)}</p>`;$('stats').innerHTML='';}
 }
 const dateToday=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Europe/Kyiv'});
 function render(rows){
@@ -36,6 +34,7 @@ function render(rows){
     body=rows.map(v=>`<tr><td><strong>${e(v.model)} · ${e(v.year)}</strong><small>${e(v.plate)}</small></td><td>${e(v.vin)}</td><td>${e(v.customer_name)}</td><td>${Number(v.mileage).toLocaleString('uk-UA')} км</td><td><button data-vehicle-history="${v.id}">Історія</button> ${session.manager?`<button data-edit="${v.id}">Редагувати</button> <button data-delete="${v.id}">Видалити</button>`:''}</td></tr>`).join('');
   }
   $('content').innerHTML=`<div class="table-scroll"><table><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>`;
+  for(const row of $('content').querySelectorAll('tbody tr'))Array.from(row.cells).forEach((cell,i)=>cell.dataset.label=heads[i]);
 }
 async function allOptions(resource,query=''){let result=[],url=`/api/${resource}/${query}`;while(url){const d=await api(url);result.push(...d.results);url=d.next;}return result;}
 async function edit(record=null,kind=view){
@@ -65,14 +64,20 @@ async function edit(record=null,kind=view){
   }catch(err){notice(err.message);}
 }
 async function showOrder(id){
+  const version=++detailVersion;
   try{
-    currentOrder=await api(`/api/orders/${id}/`);const o=currentOrder;const events=await api(`/api/orders/${id}/history/`);
+    const o=await api(`/api/orders/${id}/`);
+    if(version!==detailVersion)return;
+    const events=await api(`/api/orders/${id}/history/`);
+    if(version!==detailVersion)return;
+    // Publish the displayed record and mutation target together, after both reads succeed.
+    currentOrder=o;
     $('detail-title').textContent=`${o.number} · ${o.vehicle_label}`;
-    $('detail-content').innerHTML=`<div class="detail-meta"><p><small>Клієнт</small>${e(o.customer_name)}</p><p><small>Статус</small>${e(o.status_label)}</p><p><small>Плановий строк</small>${e(o.due_date)}</p><p><small>Механік</small>${e(o.mechanic_name)}</p></div><h3>Звернення</h3><p>${e(o.complaint)}</p><h3>Діагностика та коди помилок</h3><p>${e(o.diagnosis)||'Поки немає запису'}</p><p>${e(o.fault_codes)}</p><div class="detail-actions">${o.status!=='delivered'?'<button id="edit-order">Редагувати</button>':''}${o.transitions.filter(s=>s.value!=='delivered'||session.manager).map(s=>`<button data-transition="${e(s.value)}">→ ${e(s.label)}</button>`).join('')}</div><h3>Попередній кошторис · ${money(o.total)}</h3><div class="table-scroll"><table><thead><tr><th>Позиція</th><th>Кількість × ціна</th><th></th></tr></thead><tbody>${o.items.map(i=>`<tr><td>${e(i.name)}<small>${i.kind==='labor'?'Робота':'Запчастина'}</small></td><td>${e(i.quantity)} × ${money(i.unit_price)}</td><td>${session.manager&&o.status!=='delivered'?`<button data-item-edit="${i.id}">Змінити</button> <button data-item-delete="${i.id}">Видалити</button>`:''}</td></tr>`).join('')||'<tr><td colspan="3">Позицій поки немає</td></tr>'}</tbody></table></div>${session.manager&&o.status!=='delivered'?'<p><button id="add-item">+ Додати позицію</button></p>':''}<h3>Історія та коментарі</h3>${events.map(h=>`<div class="event">${e(h.text)}<small>${e(h.author_name)} · ${new Date(h.created_at).toLocaleString('uk-UA')}</small></div>`).join('')}<form id="comment-form" class="comment-form"><input name="text" aria-label="Новий коментар" placeholder="Додати коментар…" maxlength="4000" required><button>Додати</button></form><p id="detail-error" class="error" role="alert"></p>`;
+    $('detail-content').innerHTML=`<div class="detail-meta"><p><small>Клієнт</small>${e(o.customer_name)}</p><p><small>Статус</small>${e(o.status_label)}</p><p><small>Плановий строк</small>${e(o.due_date)}</p><p><small>Механік</small>${e(o.mechanic_name)}</p></div>${o.status==='delivered'?'<p class="closed-note">Замовлення видано. Редагування закрите; можна додати коментар.</p>':''}<h3>Звернення</h3><p>${e(o.complaint)}</p><h3>Діагностика та коди помилок</h3><p>${e(o.diagnosis)||'Поки немає запису'}</p><p>${e(o.fault_codes)}</p><div class="detail-actions">${o.status!=='delivered'?'<button id="edit-order">Редагувати</button>':''}${o.transitions.filter(s=>s.value!=='delivered'||session.manager).map(s=>`<button data-transition="${e(s.value)}">→ ${e(s.label)}</button>`).join('')}</div><h3>Попередній кошторис · ${money(o.total)}</h3><div class="table-scroll"><table><thead><tr><th>Позиція</th><th>Кількість × ціна</th><th></th></tr></thead><tbody>${o.items.map(i=>`<tr><td>${e(i.name)}<small>${i.kind==='labor'?'Робота':'Запчастина'}</small></td><td>${e(i.quantity)} × ${money(i.unit_price)}</td><td>${session.manager&&o.status!=='delivered'?`<button data-item-edit="${i.id}">Змінити</button> <button data-item-delete="${i.id}">Видалити</button>`:''}</td></tr>`).join('')||'<tr><td colspan="3">Позицій поки немає</td></tr>'}</tbody></table></div>${session.manager&&o.status!=='delivered'?'<p><button id="add-item">+ Додати позицію</button></p>':''}<h3>Історія та коментарі</h3>${events.map(h=>`<div class="event">${e(h.text)}<small>${e(h.author_name)} · ${new Date(h.created_at).toLocaleString('uk-UA')}</small></div>`).join('')}<form id="comment-form" class="comment-form"><input name="text" aria-label="Новий коментар" placeholder="Додати коментар…" maxlength="4000" required><button>Додати</button></form><p id="detail-error" class="error" role="alert"></p>`;
     if(!$('detail').open)$('detail').showModal();
     $('edit-order')?.addEventListener('click',()=>edit(o,'orders'));$('add-item')?.addEventListener('click',()=>edit(null,'items'));
-    $('comment-form').onsubmit=async ev=>{ev.preventDefault();try{await send(`/api/orders/${id}/comment/`,Object.fromEntries(new FormData(ev.target)));await showOrder(id);}catch(err){$('detail-error').textContent=err.message;}};
-  }catch(err){notice(err.message);}
+    $('comment-form').onsubmit=async ev=>{ev.preventDefault();const button=ev.submitter;button.disabled=true;try{await send(`/api/orders/${id}/comment/`,Object.fromEntries(new FormData(ev.target)));await showOrder(id);}catch(err){$('detail-error').textContent=err.message;}finally{button.disabled=false;}};
+  }catch(err){if(version===detailVersion)notice(err.message);}
 }
 $('detail-content').addEventListener('click',async ev=>{const t=ev.target;try{
   if(t.dataset.transition){t.disabled=true;await send(`/api/orders/${currentOrder.id}/transition/`,{status:t.dataset.transition});await showOrder(currentOrder.id);await load();}
@@ -85,6 +90,6 @@ $('content').addEventListener('click',async ev=>{const t=ev.target;try{
   if(t.dataset.delete&&confirm('Видалити запис? Запис із пов’язаними даними видалити неможливо.')){await api(`/api/${view}/${t.dataset.delete}/`,{method:'DELETE'});currentPage=1;await load();}
   if(t.dataset.vehicleHistory){const history=await allOptions('orders',`?vehicle=${t.dataset.vehicleHistory}`);$('detail-title').textContent='Історія обслуговування';$('detail-content').innerHTML=history.map(o=>`<p><button data-history-order="${o.id}">${e(o.number)} · ${e(o.status_label)}</button> ${e(o.complaint)}</p>`).join('')||'<p>Замовлень поки немає.</p>';$('detail').showModal();for(const b of $('detail-content').querySelectorAll('[data-history-order]'))b.onclick=()=>showOrder(b.dataset.historyOrder);}
 }catch(err){notice(err.message);}});
-for(const b of document.querySelectorAll('[data-view]'))b.onclick=()=>{view=b.dataset.view;currentPage=1;for(const n of document.querySelectorAll('[data-view]'))n.classList.toggle('active',n===b);$('page-title').textContent=titles[view][0];$('create').textContent='+ '+titles[view][1];$('search').value='';$('status-filter').hidden=view!=='orders';$('overdue').parentElement.hidden=view!=='orders';$('page-description').textContent=view==='orders'?'Від першого звернення до видачі автомобіля.':view==='customers'?'Контакти та примітки про клієнтів майстерні.':'Автомобілі та історія їхнього обслуговування.';notice('');load();};
+for(const b of document.querySelectorAll('[data-view]'))b.onclick=()=>{view=b.dataset.view;currentPage=1;for(const n of document.querySelectorAll('[data-view]')){n.classList.toggle('active',n===b);n.setAttribute('aria-current',n===b?'page':'false')};$('page-title').textContent=titles[view][0];$('create').textContent='+ '+titles[view][1];$('search').value='';$('status-filter').hidden=view!=='orders';$('overdue').parentElement.hidden=view!=='orders';$('page-description').textContent=view==='orders'?'Від першого звернення до видачі автомобіля.':view==='customers'?'Контакти та примітки про клієнтів майстерні.':'Автомобілі та історія їхнього обслуговування.';notice('');load();};
 $('create').onclick=()=>edit();$('filters').onsubmit=ev=>{ev.preventDefault();currentPage=1;load();};$('prev').onclick=()=>{currentPage--;load();};$('next').onclick=()=>{currentPage++;load();};$('close-dialog').onclick=$('cancel').onclick=()=>$('editor').close();$('close-detail').onclick=()=>$('detail').close();
 try{session=await api('/api/session/');$('status-filter').innerHTML+=session.statuses.map(s=>`<option value="${e(s.value)}">${e(s.label)}</option>`).join('');await load();}catch(err){notice(err.message);}
