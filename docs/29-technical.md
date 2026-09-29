@@ -14,7 +14,7 @@ ServiceTrack — локальний Django-моноліт із REST API та б�
 5. Створи таблиці: python manage.py migrate.
 6. Для порожньої демонстраційної БД задай DEMO_PASSWORD довжиною від 12 символів та виконай python manage.py seed_demo. Для робочої БД створи власного superuser й групи ролей через admin.
 7. Запусти python manage.py runserver 127.0.0.1:8943. Відкрий цю адресу у браузері.
-Локальний SECRET_KEY створюється автоматично у .local-secret з правами 600. Паролі, .env та база не входять до Git. seed_demo відмовляється працювати з непорожньою БД. На цьому ноутбуці порт 8765 зайнятий іншим проєктом; не використовувати його.
+Локальний SECRET_KEY створюється автоматично у .local-secret з правами 600. Паролі, .env та база не входять до Git. seed_demo відмовляється працювати з непорожньою БД.
 
 ## Автентифікація і протокол
 Базова адреса API: http://127.0.0.1:8943/api/. Формат — JSON, кодування UTF-8. Вхід: GET /accounts/login/ для форми та CSRF, потім POST форми username/password/csrfmiddlewaretoken. Успіх створює sessionid cookie. Вихід — POST /accounts/logout/ із CSRF. Самореєстрації та JWT немає.
