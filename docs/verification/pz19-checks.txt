@@ -1,0 +1,48 @@
+api:
+Bad Request: /api/customers/
+Bad Request: /api/vehicles/
+Bad Request: /api/orders/1/transition/
+Bad Request: /api/orders/1/comment/
+Bad Request: /api/customers/1/
+Not Found: /api/orders/999/
+Method Not Allowed: /api/orders/1/
+Bad Request: /api/items/
+Bad Request: /api/orders/
+Forbidden: /api/session/
+Captured 26 successful operations and 10 errors in isolated test database
+
+
+backend:
+Creating test database for alias 'default'...
+.....................
+----------------------------------------------------------------------
+Ran 21 tests in 12.557s
+
+OK
+Destroying test database for alias 'default'...
+Found 21 test(s).
+System check identified no issues (0 silenced).
+
+
+frontend:
+✔ JSON success sends CSRF and balances loading (44.070875ms)
+✔ 204 needs no JSON (0.168583ms)
+✔ validation and status errors are human readable (1.840666ms)
+✔ offline and invalid JSON reset loading (0.406209ms)
+✔ abort preserves cancellation (0.233666ms)
+✔ late detail response cannot replace the latest order or mutation target (6.064583ms)
+✔ failed replacement preserves the visible order and its mutation target (1.587958ms)
+✔ escape user data and null (1.613083ms)
+✔ money supports zero, decimals and invalid values (42.712542ms)
+✔ overdue excludes ready and delivered (0.681334ms)
+✔ search recognizes exact order number and encodes text (0.500375ms)
+✔ error presentation handles nested response (0.194584ms)
+✔ form fields escape labels, values and option labels (0.312791ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 147.250541
