@@ -26,3 +26,17 @@
 Статус: виправлено; потрібна перевірка мобільного viewport.
 
 Примітка до BUG-001: початковий тест містив також неприпустиму літеру O в DEMO. Це дефект тестових даних; їх виправлено на DEMX. Початковий лог не ізолював лише нормалізацію, тому остаточний доказ — повторний тест із валідною нижньорегістровою формою.
+
+## BUG-004 — Unicode та надмірні ID у query спричиняли збій
+Пріоритет: Medium. Відтворення: GET /api/orders/?vehicle=² або /api/vehicles/?customer=<100 цифр>. До виправлення: ValueError/OverflowError. Після:400. Причина: isdigit без перевірки ASCII і діапазону SQLite. Виправлено parse_identifier. Регресія test_invalid_identifier_filters_return_400 пройшла;21серверний тест PASS.
+
+
+## ПЗ23: підтверджені відкриті дефекти
+
+- [BUG-005](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/9): Open; повний опис у [bugs/BUG-005.md](bugs/BUG-005.md).
+- [BUG-006](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/10): Open; повний опис у [bugs/BUG-006.md](bugs/BUG-006.md).
+- [BUG-007](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/11): Open; повний опис у [bugs/BUG-007.md](bugs/BUG-007.md).
+
+
+## Оновлення ПЗ30 — 29.09.2026
+BUG005–008 виправлено й перевірено в гілці fix/pz30-final-check; Issues9/10/11/15 відкриті до злиття. Докази та обсяг регресії: [ПЗ30](30-final-check.md). Попередні записи вище є історією виявлення.

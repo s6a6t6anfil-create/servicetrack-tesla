@@ -31,7 +31,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedCustomerList'
-          description: ''
+              example:
+                count: 1
+                next: null
+                previous: null
+                results:
+                - id: 1
+                  name: Демо клієнт
+                  phone: '+380000000001'
+                  email: demo@example.invalid
+                  notes: ''
+                  created_at: '2026-09-29T13:33:27.005687+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     post:
       operationId: customers_create
       tags:
@@ -41,6 +104,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Customer'
+            example:
+              name: Демо клієнт
+              phone: '+380000000001'
+              email: demo@example.invalid
+              notes: ''
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Customer'
@@ -56,7 +124,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
-          description: ''
+              example:
+                id: 1
+                name: Демо клієнт
+                phone: '+380000000001'
+                email: demo@example.invalid
+                notes: ''
+                created_at: '2026-09-29T13:33:27.005687+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      parameters:
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
   /api/customers/{id}/:
     get:
       operationId: customers_retrieve
@@ -77,7 +220,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
-          description: ''
+              example:
+                id: 1
+                name: Демо клієнт
+                phone: '+380000000001'
+                email: demo@example.invalid
+                notes: ''
+                created_at: '2026-09-29T13:33:27.005687+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     put:
       operationId: customers_update
       parameters:
@@ -87,6 +289,13 @@ paths:
           type: integer
         description: A unique integer value identifying this customer.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - customers
       requestBody:
@@ -94,6 +303,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Customer'
+            example:
+              name: Демо клієнт
+              phone: '+380000000001'
+              email: demo@example.invalid
+              notes: ''
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Customer'
@@ -109,7 +323,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
-          description: ''
+              example:
+                id: 1
+                name: Демо клієнт
+                phone: '+380000000001'
+                email: demo@example.invalid
+                notes: ''
+                created_at: '2026-09-29T13:33:27.005687+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     patch:
       operationId: customers_partial_update
       parameters:
@@ -119,6 +400,13 @@ paths:
           type: integer
         description: A unique integer value identifying this customer.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - customers
       requestBody:
@@ -126,6 +414,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchedCustomer'
+            example:
+              notes: Уточнення
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCustomer'
@@ -140,7 +430,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
-          description: ''
+              example:
+                id: 1
+                name: Демо клієнт
+                phone: '+380000000001'
+                email: demo@example.invalid
+                notes: Уточнення
+                created_at: '2026-09-29T13:33:27.005687+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     delete:
       operationId: customers_destroy
       parameters:
@@ -150,13 +507,72 @@ paths:
           type: integer
         description: A unique integer value identifying this customer.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - customers
       security:
       - cookieAuth: []
       responses:
         '204':
-          description: No response body
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
   /api/items/:
     get:
       operationId: items_list
@@ -183,7 +599,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedItemList'
-          description: ''
+              example:
+                count: 1
+                next: null
+                previous: null
+                results:
+                - id: 1
+                  order: 1
+                  kind: labor
+                  name: Огляд
+                  quantity: '1.50'
+                  unit_price: '1000.00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     post:
       operationId: items_create
       tags:
@@ -193,6 +672,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Item'
+            example:
+              order: 1
+              kind: labor
+              name: Огляд
+              quantity: '1.50'
+              unit_price: '1000.00'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Item'
@@ -208,7 +693,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-          description: ''
+              example:
+                id: 1
+                order: 1
+                kind: labor
+                name: Огляд
+                quantity: '1.50'
+                unit_price: '1000.00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      parameters:
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
   /api/items/{id}/:
     get:
       operationId: items_retrieve
@@ -229,7 +789,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-          description: ''
+              example:
+                id: 1
+                order: 1
+                kind: labor
+                name: Огляд
+                quantity: '1.50'
+                unit_price: '1000.00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     put:
       operationId: items_update
       parameters:
@@ -239,6 +858,13 @@ paths:
           type: integer
         description: A unique integer value identifying this order item.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - items
       requestBody:
@@ -246,6 +872,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Item'
+            example:
+              order: 1
+              kind: labor
+              name: Огляд
+              quantity: '1.50'
+              unit_price: '1000.00'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Item'
@@ -261,7 +893,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-          description: ''
+              example:
+                id: 1
+                order: 1
+                kind: labor
+                name: Огляд
+                quantity: '1.50'
+                unit_price: '1000.00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     patch:
       operationId: items_partial_update
       parameters:
@@ -271,6 +970,13 @@ paths:
           type: integer
         description: A unique integer value identifying this order item.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - items
       requestBody:
@@ -278,6 +984,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchedItem'
+            example:
+              quantity: '2.00'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedItem'
@@ -292,7 +1000,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-          description: ''
+              example:
+                id: 1
+                order: 1
+                kind: labor
+                name: Огляд
+                quantity: '2.00'
+                unit_price: '1000.00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     delete:
       operationId: items_destroy
       parameters:
@@ -302,13 +1077,72 @@ paths:
           type: integer
         description: A unique integer value identifying this order item.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - items
       security:
       - cookieAuth: []
       responses:
         '204':
-          description: No response body
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
   /api/orders/:
     get:
       operationId: orders_list
@@ -325,6 +1159,30 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: status
+        required: false
+        description: Точний статус; невідоме значення дає порожній результат.
+        schema:
+          type: string
+      - in: query
+        name: overdue
+        required: false
+        description: Тільки значення true вмикає прострочення.
+        schema:
+          type: string
+      - in: query
+        name: vehicle
+        required: false
+        description: ID автомобіля, лише цифри.
+        schema:
+          type: integer
+      - in: query
+        name: number
+        required: false
+        description: Номер ST-0001 або 1; точний збіг.
+        schema:
+          type: string
       tags:
       - orders
       security:
@@ -335,7 +1193,91 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedOrderList'
-          description: ''
+              example:
+                count: 1
+                next: null
+                previous: null
+                results:
+                - id: 1
+                  number: ST-0001
+                  vehicle: 1
+                  vehicle_label: Model Y · ДЕМО
+                  vin: TEST0000000000001
+                  customer_name: Демо клієнт
+                  mechanic: null
+                  mechanic_name: Не призначено
+                  complaint: Огляд підвіски
+                  diagnosis: ''
+                  fault_codes: ''
+                  due_date: '2026-10-05'
+                  status: received
+                  status_label: Прийнято
+                  created_at: '2026-09-29T13:33:27.012558+03:00'
+                  updated_at: '2026-09-29T13:33:27.012570+03:00'
+                  total: '1500.00'
+                  items:
+                  - id: 1
+                    order: 1
+                    kind: labor
+                    name: Огляд
+                    quantity: '1.50'
+                    unit_price: '1000.00'
+                  transitions:
+                  - value: diagnosis
+                    label: Діагностика
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
     post:
       operationId: orders_create
       tags:
@@ -345,6 +1287,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Order'
+            example:
+              vehicle: 1
+              complaint: Огляд підвіски
+              due_date: '2026-10-05'
+              mechanic: null
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Order'
@@ -360,7 +1307,97 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
-          description: ''
+              example:
+                id: 1
+                number: ST-0001
+                vehicle: 1
+                vehicle_label: Model Y · ДЕМО
+                vin: TEST0000000000001
+                customer_name: Демо клієнт
+                mechanic: null
+                mechanic_name: Не призначено
+                complaint: Огляд підвіски
+                diagnosis: ''
+                fault_codes: ''
+                due_date: '2026-10-05'
+                status: received
+                status_label: Прийнято
+                created_at: '2026-09-29T13:33:27.012558+03:00'
+                updated_at: '2026-09-29T13:33:27.012570+03:00'
+                total: '0.00'
+                items: []
+                transitions:
+                - value: diagnosis
+                  label: Діагностика
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      parameters:
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
   /api/orders/{id}/:
     get:
       operationId: orders_retrieve
@@ -371,101 +1408,28 @@ paths:
           type: integer
         description: A unique integer value identifying this order.
         required: true
-      tags:
-      - orders
-      security:
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-          description: ''
-    patch:
-      operationId: orders_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this order.
-        required: true
-      tags:
-      - orders
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedOrder'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedOrder'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedOrder'
-      security:
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-          description: ''
-  /api/orders/{id}/comment/:
-    post:
-      operationId: orders_comment_create
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this order.
-        required: true
-      tags:
-      - orders
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Comment'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Comment'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Comment'
-        required: true
-      security:
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-          description: ''
-  /api/orders/{id}/history/:
-    get:
-      operationId: orders_history_list
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this order.
-        required: true
-      - name: page
+      - in: query
+        name: status
         required: false
-        in: query
-        description: A page number within the paginated result set.
+        description: Точний статус; невідоме значення дає порожній результат.
+        schema:
+          type: string
+      - in: query
+        name: overdue
+        required: false
+        description: Тільки значення true вмикає прострочення.
+        schema:
+          type: string
+      - in: query
+        name: vehicle
+        required: false
+        description: ID автомобіля, лише цифри.
         schema:
           type: integer
-      - name: search
+      - in: query
+        name: number
         required: false
-        in: query
-        description: A search term.
+        description: Номер ST-0001 або 1; точний збіг.
         schema:
           type: string
       tags:
@@ -477,8 +1441,438 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedEventList'
-          description: ''
+                $ref: '#/components/schemas/Order'
+              example:
+                id: 1
+                number: ST-0001
+                vehicle: 1
+                vehicle_label: Model Y · ДЕМО
+                vin: TEST0000000000001
+                customer_name: Демо клієнт
+                mechanic: null
+                mechanic_name: Не призначено
+                complaint: Огляд підвіски
+                diagnosis: ''
+                fault_codes: ''
+                due_date: '2026-10-05'
+                status: received
+                status_label: Прийнято
+                created_at: '2026-09-29T13:33:27.012558+03:00'
+                updated_at: '2026-09-29T13:33:27.012570+03:00'
+                total: '1500.00'
+                items:
+                - id: 1
+                  order: 1
+                  kind: labor
+                  name: Огляд
+                  quantity: '1.50'
+                  unit_price: '1000.00'
+                transitions:
+                - value: diagnosis
+                  label: Діагностика
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
+    patch:
+      operationId: orders_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this order.
+        required: true
+      - in: query
+        name: status
+        required: false
+        description: Точний статус; невідоме значення дає порожній результат.
+        schema:
+          type: string
+      - in: query
+        name: overdue
+        required: false
+        description: Тільки значення true вмикає прострочення.
+        schema:
+          type: string
+      - in: query
+        name: vehicle
+        required: false
+        description: ID автомобіля, лише цифри.
+        schema:
+          type: integer
+      - in: query
+        name: number
+        required: false
+        description: Номер ST-0001 або 1; точний збіг.
+        schema:
+          type: string
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+            example:
+              diagnosis: Огляд завершено
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              example:
+                id: 1
+                number: ST-0001
+                vehicle: 1
+                vehicle_label: Model Y · ДЕМО
+                vin: TEST0000000000001
+                customer_name: Демо клієнт
+                mechanic: null
+                complaint: Огляд підвіски
+                diagnosis: Огляд завершено
+                fault_codes: ''
+                due_date: '2026-10-05'
+                status: received
+                status_label: Прийнято
+                created_at: '2026-09-29T13:33:27.012558+03:00'
+                updated_at: '2026-09-29T13:33:27.044253+03:00'
+                total: '1500.00'
+                items:
+                - id: 1
+                  order: 1
+                  kind: labor
+                  name: Огляд
+                  quantity: '1.50'
+                  unit_price: '1000.00'
+                transitions:
+                - value: diagnosis
+                  label: Діагностика
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
+  /api/orders/{id}/comment/:
+    post:
+      operationId: orders_comment_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this order.
+        required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+            example:
+              text: Очікується погодження
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+              example:
+                id: 3
+                kind: comment
+                text: Очікується погодження
+                author_name: api_demo
+                created_at: '2026-09-29T13:33:27.061526+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
+  /api/orders/{id}/history/:
+    get:
+      operationId: orders_history_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this order.
+        required: true
+      tags:
+      - orders
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example:
+              - id: 3
+                kind: comment
+                text: Очікується погодження
+                author_name: api_demo
+                created_at: '2026-09-29T13:33:27.061526+03:00'
+              - id: 2
+                kind: status
+                text: Прийнято → Діагностика
+                author_name: api_demo
+                created_at: '2026-09-29T13:33:27.057226+03:00'
+              - id: 1
+                kind: created
+                text: Замовлення прийнято
+                author_name: api_demo
+                created_at: '2026-09-29T13:33:27.012904+03:00'
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
   /api/orders/{id}/transition/:
     post:
       operationId: orders_transition_create
@@ -489,6 +1883,13 @@ paths:
           type: integer
         description: A unique integer value identifying this order.
         required: true
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - orders
       requestBody:
@@ -496,6 +1897,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Status'
+            example:
+              status: diagnosis
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Status'
@@ -511,7 +1914,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
-          description: ''
+              example:
+                id: 1
+                number: ST-0001
+                vehicle: 1
+                vehicle_label: Model Y · ДЕМО
+                vin: TEST0000000000001
+                customer_name: Демо клієнт
+                mechanic: null
+                mechanic_name: Не призначено
+                complaint: Огляд підвіски
+                diagnosis: Огляд завершено
+                fault_codes: ''
+                due_date: '2026-10-05'
+                status: diagnosis
+                status_label: Діагностика
+                created_at: '2026-09-29T13:33:27.012558+03:00'
+                updated_at: '2026-09-29T13:33:27.056958+03:00'
+                total: '2000.00'
+                items:
+                - id: 1
+                  order: 1
+                  kind: labor
+                  name: Огляд
+                  quantity: '2.00'
+                  unit_price: '1000.00'
+                transitions:
+                - value: approval
+                  label: Очікує погодження
+                - value: parts
+                  label: Очікує запчастин
+                - value: repair
+                  label: У ремонті
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Потрібна сесія. Механік читає лише призначені йому замовлення
+        та пов’язані записи. Детальні правила ролей і статусів: docs/14-api.md.'
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -670,7 +2165,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SessionInfo'
-          description: ''
+              example:
+                username: api_demo
+                manager: true
+                mechanics: []
+                statuses:
+                - value: received
+                  label: Прийнято
+                - value: diagnosis
+                  label: Діагностика
+                - value: approval
+                  label: Очікує погодження
+                - value: parts
+                  label: Очікує запчастин
+                - value: repair
+                  label: У ремонті
+                - value: ready
+                  label: Готово
+                - value: delivered
+                  label: Видано
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: 'Дані поточного користувача; mechanics порожній для механіка. Детальні
+        правила ролей і статусів: docs/14-api.md.'
   /api/vehicles/:
     get:
       operationId: vehicles_list
@@ -687,6 +2253,12 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: customer
+        required: false
+        description: ID клієнта, лише цифри.
+        schema:
+          type: integer
       tags:
       - vehicles
       security:
@@ -697,7 +2269,72 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedVehicleList'
-          description: ''
+              example:
+                count: 1
+                next: null
+                previous: null
+                results:
+                - id: 1
+                  customer: 1
+                  customer_name: Демо клієнт
+                  model: Model Y
+                  year: 2023
+                  vin: TEST0000000000001
+                  plate: ДЕМО
+                  mileage: 12000
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     post:
       operationId: vehicles_create
       tags:
@@ -707,6 +2344,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Vehicle'
+            example:
+              customer: 1
+              model: Model Y
+              year: 2023
+              vin: TEST0000000000001
+              plate: ДЕМО
+              mileage: 12000
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vehicle'
@@ -722,7 +2366,84 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vehicle'
-          description: ''
+              example:
+                id: 1
+                customer: 1
+                customer_name: Демо клієнт
+                model: Model Y
+                year: 2023
+                vin: TEST0000000000001
+                plate: ДЕМО
+                mileage: 12000
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      parameters:
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
   /api/vehicles/{id}/:
     get:
       operationId: vehicles_retrieve
@@ -733,6 +2454,12 @@ paths:
           type: integer
         description: A unique integer value identifying this vehicle.
         required: true
+      - in: query
+        name: customer
+        required: false
+        description: ID клієнта, лише цифри.
+        schema:
+          type: integer
       tags:
       - vehicles
       security:
@@ -743,7 +2470,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vehicle'
-          description: ''
+              example:
+                id: 1
+                customer: 1
+                customer_name: Демо клієнт
+                model: Model Y
+                year: 2023
+                vin: TEST0000000000001
+                plate: ДЕМО
+                mileage: 12000
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     put:
       operationId: vehicles_update
       parameters:
@@ -753,6 +2541,19 @@ paths:
           type: integer
         description: A unique integer value identifying this vehicle.
         required: true
+      - in: query
+        name: customer
+        required: false
+        description: ID клієнта, лише цифри.
+        schema:
+          type: integer
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - vehicles
       requestBody:
@@ -760,6 +2561,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Vehicle'
+            example:
+              customer: 1
+              model: Model Y
+              year: 2023
+              vin: TEST0000000000001
+              plate: ДЕМО
+              mileage: 12000
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vehicle'
@@ -775,7 +2583,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vehicle'
-          description: ''
+              example:
+                id: 1
+                customer: 1
+                customer_name: Демо клієнт
+                model: Model Y
+                year: 2023
+                vin: TEST0000000000001
+                plate: ДЕМО
+                mileage: 12000
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     patch:
       operationId: vehicles_partial_update
       parameters:
@@ -785,6 +2662,19 @@ paths:
           type: integer
         description: A unique integer value identifying this vehicle.
         required: true
+      - in: query
+        name: customer
+        required: false
+        description: ID клієнта, лише цифри.
+        schema:
+          type: integer
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - vehicles
       requestBody:
@@ -792,6 +2682,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchedVehicle'
+            example:
+              mileage: 12100
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedVehicle'
@@ -806,7 +2698,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vehicle'
-          description: ''
+              example:
+                id: 1
+                customer: 1
+                customer_name: Демо клієнт
+                model: Model Y
+                year: 2023
+                vin: TEST0000000000001
+                plate: ДЕМО
+                mileage: 12100
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '415':
+          description: Непідтримуваний Content-Type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
     delete:
       operationId: vehicles_destroy
       parameters:
@@ -816,13 +2777,78 @@ paths:
           type: integer
         description: A unique integer value identifying this vehicle.
         required: true
+      - in: query
+        name: customer
+        required: false
+        description: ID клієнта, лише цифри.
+        schema:
+          type: integer
+      - in: header
+        name: X-CSRFToken
+        required: true
+        description: Актуальний CSRF після входу; cookie sessionid і csrftoken надсилаються
+          разом.
+        schema:
+          type: string
       tags:
       - vehicles
       security:
       - cookieAuth: []
       responses:
         '204':
-          description: No response body
+          description: Успішна відповідь, приклад із ізольованої демонстраційної БД.
+        '400':
+          description: Некоректні поля, фільтр або бізнес-правило.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '403':
+          description: Немає сесії, прав або коректного CSRF.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '404':
+          description: Об’єкт або сторінка не знайдені / недоступні.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '405':
+          description: Метод не підтримується.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '406':
+          description: Непідтримуваний Accept.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '429':
+          description: Перевищено 600 запитів за хвилину для користувача; Retry-After.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: Помилки полів або detail; текст локалізований.
+        '500':
+          description: Неочікувана помилка сервера; формат залежить від DEBUG і сервера.
+      description: Потрібна сесія. Механік читає лише призначені йому замовлення та
+        пов’язані записи. Зміни customers/vehicles/items доступні лише адміністратору.
 components:
   schemas:
     Comment:

@@ -87,3 +87,79 @@ class WorkshopTests(TestCase):
     def test_ui_pages(self):
         self.assertEqual(self.client.get('/accounts/login/').status_code,200)
         c=APIClient();self.assertEqual(c.get('/').status_code,302)
+
+    def test_invalid_identifier_filters_return_400(self):
+        for resource, field in [('orders','vehicle'),('orders','number'),('vehicles','customer')]:
+            for value in ['²','9'*100,'-1','1.5']:
+                with self.subTest(resource=resource,field=field,value=value):
+                    response=self.client.get(f'/api/{resource}/',{field:value})
+                    self.assertEqual(response.status_code,400)
+
+    def test_status_rolls_back_if_audit_write_fails(self):
+        from unittest.mock import patch
+        from .services import change_status
+        with patch('workshop.services.Event.objects.create',side_effect=RuntimeError('audit unavailable')):
+            with self.assertRaises(RuntimeError):
+                change_status(self.order,'diagnosis',self.admin)
+        self.order.refresh_from_db()
+        self.assertEqual(self.order.status,'received')
+        self.assertFalse(Event.objects.filter(order=self.order).exists())
+
+    def test_all_status_transitions(self):
+        from .services import TRANSITIONS, change_status
+        from rest_framework.exceptions import ValidationError
+        for source in Order.Status.values:
+            for target in Order.Status.values:
+                with self.subTest(source=source,target=target):
+                    self.order.status=source;self.order.save()
+                    count=Event.objects.filter(order=self.order).count()
+                    if target in TRANSITIONS[source]:
+                        change_status(self.order,target,self.admin)
+                        self.assertEqual(Event.objects.filter(order=self.order).count(),count+1)
+                    else:
+                        with self.assertRaises(ValidationError):change_status(self.order,target,self.admin)
+                        self.assertEqual(Event.objects.filter(order=self.order).count(),count)
+                    self.order.refresh_from_db()
+                    self.assertEqual(self.order.status,target if target in TRANSITIONS[source] else source)
+
+    def test_required_and_boundary_fields(self):
+        vehicle={'customer':self.customer.pk,'model':'Model Y','year':2023,'vin':'TEST0000000000098'}
+        for changes in [{'year':2007},{'year':2101},{'mileage':-1},{'mileage':3000001},{'model':'Unknown'}]:
+            self.assertEqual(self.client.post('/api/vehicles/',{**vehicle,**changes}).status_code,400)
+        order={'vehicle':self.vehicle.pk,'complaint':'Огляд','due_date':'2026-10-01'}
+        for missing in order:
+            self.assertEqual(self.client.post('/api/orders/',{k:v for k,v in order.items() if k!=missing}).status_code,400)
+        self.mechanic.is_active=False;self.mechanic.save()
+        self.assertEqual(self.client.post('/api/orders/',{**order,'mechanic':self.mechanic.pk}).status_code,400)
+
+    def test_session_csrf_success_and_closed_order_comment(self):
+        c=APIClient(enforce_csrf_checks=True);c.force_login(self.admin)
+        c.get('/accounts/login/')
+        csrf=c.cookies['csrftoken'].value
+        result=c.post('/api/customers/',{'name':'CSRF Demo','phone':'000'},format='json',HTTP_X_CSRFTOKEN=csrf)
+        self.assertEqual(result.status_code,201)
+        self.order.status='delivered';self.order.save()
+        self.client.force_authenticate(self.mechanic)
+        response=self.client.post(f'/api/orders/{self.order.pk}/comment/',{'text':'Уточнення після видачі'},format='json')
+        self.assertEqual(response.status_code,201)
+
+class LegacyDemoRepairTests(TestCase):
+    def test_repair_is_opt_in_scoped_and_idempotent(self):
+        from django.core.management import call_command
+        from io import StringIO
+        demo=Customer.objects.create(name='Demo',phone='000',notes='Вигадані демонстраційні дані')
+        real=Customer.objects.create(name='Other',phone='000')
+        a=Vehicle.objects.create(customer=demo,model='Model Y',year=2023,vin='DEMO0000000000001')
+        b=Vehicle.objects.create(customer=real,model='Model Y',year=2023,vin='DEMO0000000000002')
+        call_command('repair_demo_vins',stdout=StringIO());a.refresh_from_db();self.assertTrue(a.vin.startswith('DEMO'))
+        call_command('repair_demo_vins',apply=True,stdout=StringIO())
+        a.refresh_from_db();b.refresh_from_db();self.assertEqual(a.vin,'DEMX0000000000001');self.assertEqual(b.vin,'DEMO0000000000002')
+        call_command('repair_demo_vins',apply=True,stdout=StringIO());self.assertEqual(Vehicle.objects.count(),2)
+    def test_collision_leaves_all_rows_unchanged(self):
+        from django.core.management import call_command,CommandError
+        from io import StringIO
+        demo=Customer.objects.create(name='Demo',phone='000',notes='Вигадані демонстраційні дані')
+        for vin in ['DEMO0000000000001','DEMO0000000000002','DEMX0000000000002']:
+            Vehicle.objects.create(customer=demo,model='Model Y',year=2023,vin=vin)
+        with self.assertRaises(CommandError):call_command('repair_demo_vins',apply=True,stdout=StringIO())
+        self.assertEqual(Vehicle.objects.filter(vin__startswith='DEMO').count(),2)

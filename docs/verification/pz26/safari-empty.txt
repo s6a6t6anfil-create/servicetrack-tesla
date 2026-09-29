@@ -1,0 +1,12 @@
+The following is a diff from the previous accessibility tree for Window: "ServiceTrack Tesla · Майстерня" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 275-280, 289-339, 341
++							344 текст Замовлень у вибірці
++							345 текст 0
++							346 текст Активних на сторінці
++							347 текст 0
++							348 текст Прострочених на сторінці
++							349 текст 0
+~							283 текстове поле (settable) Пошук, Value: PZ26-NO-MATCH, Placeholder: VIN, клієнт або номер ST-0001
++						350 текст Записів немає. Зміни фільтри або додай перший запис.
++						351 текст 0 записів · сторінка 1
+The focused UI element is 176 HTML-контент Description: ServiceTrack Tesla · Майстерня, URL: 127.0.0.1:8943/

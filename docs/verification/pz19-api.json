@@ -1,0 +1,641 @@
+{
+  "operations": {
+    "POST /api/customers/": {
+      "request": {
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": ""
+      },
+      "status": 201,
+      "response": {
+        "id": 1,
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": "",
+        "created_at": "2026-09-29T14:36:54.952728+03:00"
+      }
+    },
+    "POST /api/vehicles/": {
+      "request": {
+        "customer": 1,
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12000
+      },
+      "status": 201,
+      "response": {
+        "id": 1,
+        "customer": 1,
+        "customer_name": "Демо клієнт",
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12000
+      }
+    },
+    "POST /api/orders/": {
+      "request": {
+        "vehicle": 1,
+        "complaint": "Огляд підвіски",
+        "due_date": "2026-10-05",
+        "mechanic": null
+      },
+      "status": 201,
+      "response": {
+        "id": 1,
+        "number": "ST-0001",
+        "vehicle": 1,
+        "vehicle_label": "Model Y · ДЕМО",
+        "vin": "TEST0000000000001",
+        "customer_name": "Демо клієнт",
+        "mechanic": null,
+        "mechanic_name": "Не призначено",
+        "complaint": "Огляд підвіски",
+        "diagnosis": "",
+        "fault_codes": "",
+        "due_date": "2026-10-05",
+        "status": "received",
+        "status_label": "Прийнято",
+        "created_at": "2026-09-29T14:36:54.959190+03:00",
+        "updated_at": "2026-09-29T14:36:54.959200+03:00",
+        "total": "0.00",
+        "items": [],
+        "transitions": [
+          {
+            "value": "diagnosis",
+            "label": "Діагностика"
+          }
+        ]
+      }
+    },
+    "POST /api/items/": {
+      "request": {
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "1.50",
+        "unit_price": "1000.00"
+      },
+      "status": 201,
+      "response": {
+        "id": 1,
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "1.50",
+        "unit_price": "1000.00"
+      }
+    },
+    "GET /api/customers/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "id": 1,
+            "name": "Демо клієнт",
+            "phone": "+380000000001",
+            "email": "demo@example.invalid",
+            "notes": "",
+            "created_at": "2026-09-29T14:36:54.952728+03:00"
+          }
+        ]
+      }
+    },
+    "GET /api/customers/{id}/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "id": 1,
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": "",
+        "created_at": "2026-09-29T14:36:54.952728+03:00"
+      }
+    },
+    "PUT /api/customers/{id}/": {
+      "request": {
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": ""
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": "",
+        "created_at": "2026-09-29T14:36:54.952728+03:00"
+      }
+    },
+    "PATCH /api/customers/{id}/": {
+      "request": {
+        "notes": "Уточнення"
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "name": "Демо клієнт",
+        "phone": "+380000000001",
+        "email": "demo@example.invalid",
+        "notes": "Уточнення",
+        "created_at": "2026-09-29T14:36:54.952728+03:00"
+      }
+    },
+    "GET /api/vehicles/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "id": 1,
+            "customer": 1,
+            "customer_name": "Демо клієнт",
+            "model": "Model Y",
+            "year": 2023,
+            "vin": "TEST0000000000001",
+            "plate": "ДЕМО",
+            "mileage": 12000
+          }
+        ]
+      }
+    },
+    "GET /api/vehicles/{id}/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "id": 1,
+        "customer": 1,
+        "customer_name": "Демо клієнт",
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12000
+      }
+    },
+    "PUT /api/vehicles/{id}/": {
+      "request": {
+        "customer": 1,
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12000
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "customer": 1,
+        "customer_name": "Демо клієнт",
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12000
+      }
+    },
+    "PATCH /api/vehicles/{id}/": {
+      "request": {
+        "mileage": 12100
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "customer": 1,
+        "customer_name": "Демо клієнт",
+        "model": "Model Y",
+        "year": 2023,
+        "vin": "TEST0000000000001",
+        "plate": "ДЕМО",
+        "mileage": 12100
+      }
+    },
+    "GET /api/orders/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "id": 1,
+            "number": "ST-0001",
+            "vehicle": 1,
+            "vehicle_label": "Model Y · ДЕМО",
+            "vin": "TEST0000000000001",
+            "customer_name": "Демо клієнт",
+            "mechanic": null,
+            "mechanic_name": "Не призначено",
+            "complaint": "Огляд підвіски",
+            "diagnosis": "",
+            "fault_codes": "",
+            "due_date": "2026-10-05",
+            "status": "received",
+            "status_label": "Прийнято",
+            "created_at": "2026-09-29T14:36:54.959190+03:00",
+            "updated_at": "2026-09-29T14:36:54.959200+03:00",
+            "total": "1500.00",
+            "items": [
+              {
+                "id": 1,
+                "order": 1,
+                "kind": "labor",
+                "name": "Огляд",
+                "quantity": "1.50",
+                "unit_price": "1000.00"
+              }
+            ],
+            "transitions": [
+              {
+                "value": "diagnosis",
+                "label": "Діагностика"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "GET /api/orders/{id}/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "id": 1,
+        "number": "ST-0001",
+        "vehicle": 1,
+        "vehicle_label": "Model Y · ДЕМО",
+        "vin": "TEST0000000000001",
+        "customer_name": "Демо клієнт",
+        "mechanic": null,
+        "mechanic_name": "Не призначено",
+        "complaint": "Огляд підвіски",
+        "diagnosis": "",
+        "fault_codes": "",
+        "due_date": "2026-10-05",
+        "status": "received",
+        "status_label": "Прийнято",
+        "created_at": "2026-09-29T14:36:54.959190+03:00",
+        "updated_at": "2026-09-29T14:36:54.959200+03:00",
+        "total": "1500.00",
+        "items": [
+          {
+            "id": 1,
+            "order": 1,
+            "kind": "labor",
+            "name": "Огляд",
+            "quantity": "1.50",
+            "unit_price": "1000.00"
+          }
+        ],
+        "transitions": [
+          {
+            "value": "diagnosis",
+            "label": "Діагностика"
+          }
+        ]
+      }
+    },
+    "PATCH /api/orders/{id}/": {
+      "request": {
+        "diagnosis": "Огляд завершено"
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "number": "ST-0001",
+        "vehicle": 1,
+        "vehicle_label": "Model Y · ДЕМО",
+        "vin": "TEST0000000000001",
+        "customer_name": "Демо клієнт",
+        "mechanic": null,
+        "complaint": "Огляд підвіски",
+        "diagnosis": "Огляд завершено",
+        "fault_codes": "",
+        "due_date": "2026-10-05",
+        "status": "received",
+        "status_label": "Прийнято",
+        "created_at": "2026-09-29T14:36:54.959190+03:00",
+        "updated_at": "2026-09-29T14:36:54.991476+03:00",
+        "total": "1500.00",
+        "items": [
+          {
+            "id": 1,
+            "order": 1,
+            "kind": "labor",
+            "name": "Огляд",
+            "quantity": "1.50",
+            "unit_price": "1000.00"
+          }
+        ],
+        "transitions": [
+          {
+            "value": "diagnosis",
+            "label": "Діагностика"
+          }
+        ]
+      }
+    },
+    "GET /api/items/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+          {
+            "id": 1,
+            "order": 1,
+            "kind": "labor",
+            "name": "Огляд",
+            "quantity": "1.50",
+            "unit_price": "1000.00"
+          }
+        ]
+      }
+    },
+    "GET /api/items/{id}/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "id": 1,
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "1.50",
+        "unit_price": "1000.00"
+      }
+    },
+    "PUT /api/items/{id}/": {
+      "request": {
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "1.50",
+        "unit_price": "1000.00"
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "1.50",
+        "unit_price": "1000.00"
+      }
+    },
+    "PATCH /api/items/{id}/": {
+      "request": {
+        "quantity": "2.00"
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "order": 1,
+        "kind": "labor",
+        "name": "Огляд",
+        "quantity": "2.00",
+        "unit_price": "1000.00"
+      }
+    },
+    "POST /api/orders/{id}/transition/": {
+      "request": {
+        "status": "diagnosis"
+      },
+      "status": 200,
+      "response": {
+        "id": 1,
+        "number": "ST-0001",
+        "vehicle": 1,
+        "vehicle_label": "Model Y · ДЕМО",
+        "vin": "TEST0000000000001",
+        "customer_name": "Демо клієнт",
+        "mechanic": null,
+        "mechanic_name": "Не призначено",
+        "complaint": "Огляд підвіски",
+        "diagnosis": "Огляд завершено",
+        "fault_codes": "",
+        "due_date": "2026-10-05",
+        "status": "diagnosis",
+        "status_label": "Діагностика",
+        "created_at": "2026-09-29T14:36:54.959190+03:00",
+        "updated_at": "2026-09-29T14:36:55.005131+03:00",
+        "total": "2000.00",
+        "items": [
+          {
+            "id": 1,
+            "order": 1,
+            "kind": "labor",
+            "name": "Огляд",
+            "quantity": "2.00",
+            "unit_price": "1000.00"
+          }
+        ],
+        "transitions": [
+          {
+            "value": "approval",
+            "label": "Очікує погодження"
+          },
+          {
+            "value": "parts",
+            "label": "Очікує запчастин"
+          },
+          {
+            "value": "repair",
+            "label": "У ремонті"
+          }
+        ]
+      }
+    },
+    "POST /api/orders/{id}/comment/": {
+      "request": {
+        "text": "Очікується погодження"
+      },
+      "status": 201,
+      "response": {
+        "id": 3,
+        "kind": "comment",
+        "text": "Очікується погодження",
+        "author_name": "api_demo",
+        "created_at": "2026-09-29T14:36:55.011987+03:00"
+      }
+    },
+    "GET /api/orders/{id}/history/": {
+      "request": null,
+      "status": 200,
+      "response": [
+        {
+          "id": 3,
+          "kind": "comment",
+          "text": "Очікується погодження",
+          "author_name": "api_demo",
+          "created_at": "2026-09-29T14:36:55.011987+03:00"
+        },
+        {
+          "id": 2,
+          "kind": "status",
+          "text": "Прийнято → Діагностика",
+          "author_name": "api_demo",
+          "created_at": "2026-09-29T14:36:55.005432+03:00"
+        },
+        {
+          "id": 1,
+          "kind": "created",
+          "text": "Замовлення прийнято",
+          "author_name": "api_demo",
+          "created_at": "2026-09-29T14:36:54.959505+03:00"
+        }
+      ]
+    },
+    "GET /api/session/": {
+      "request": null,
+      "status": 200,
+      "response": {
+        "username": "api_demo",
+        "manager": true,
+        "mechanics": [],
+        "statuses": [
+          {
+            "value": "received",
+            "label": "Прийнято"
+          },
+          {
+            "value": "diagnosis",
+            "label": "Діагностика"
+          },
+          {
+            "value": "approval",
+            "label": "Очікує погодження"
+          },
+          {
+            "value": "parts",
+            "label": "Очікує запчастин"
+          },
+          {
+            "value": "repair",
+            "label": "У ремонті"
+          },
+          {
+            "value": "ready",
+            "label": "Готово"
+          },
+          {
+            "value": "delivered",
+            "label": "Видано"
+          }
+        ]
+      }
+    },
+    "DELETE /api/items/{id}/": {
+      "request": null,
+      "status": 204,
+      "response": null
+    },
+    "DELETE /api/vehicles/{id}/": {
+      "request": null,
+      "status": 204,
+      "response": null
+    },
+    "DELETE /api/customers/{id}/": {
+      "request": null,
+      "status": 204,
+      "response": null
+    }
+  },
+  "errors": {
+    "invalid_customer": {
+      "status": 400,
+      "response": {
+        "name": [
+          "Це поле обов'язкове."
+        ],
+        "phone": [
+          "Це поле обов'язкове."
+        ]
+      }
+    },
+    "invalid_vin": {
+      "status": 400,
+      "response": {
+        "vin": [
+          "VIN має містити 17 латинських літер або цифр, без I, O, Q."
+        ]
+      }
+    },
+    "bad_transition": {
+      "status": 400,
+      "response": {
+        "status": "Недозволений перехід статусу."
+      }
+    },
+    "empty_comment": {
+      "status": 400,
+      "response": {
+        "text": [
+          "Це поле не може бути порожнім."
+        ]
+      }
+    },
+    "protected_delete": {
+      "status": 400,
+      "response": {
+        "detail": "Запис має пов’язані дані. Спочатку опрацюй залежні записи."
+      }
+    },
+    "not_found": {
+      "status": 404,
+      "response": {
+        "detail": "No Order matches the given query."
+      }
+    },
+    "method_not_allowed": {
+      "status": 405,
+      "response": {
+        "detail": "Метод \"DELETE\" не дозволений."
+      }
+    },
+    "invalid_item": {
+      "status": 400,
+      "response": {
+        "quantity": [
+          "Переконайтесь, що значення більше або дорівнює 0.01."
+        ]
+      }
+    },
+    "invalid_order": {
+      "status": 400,
+      "response": {
+        "vehicle": [
+          "Це поле обов'язкове."
+        ],
+        "complaint": [
+          "Це поле обов'язкове."
+        ],
+        "due_date": [
+          "Це поле обов'язкове."
+        ]
+      }
+    },
+    "no_session": {
+      "status": 403,
+      "response": {
+        "detail": "Реквізити перевірки достовірності не надані."
+      }
+    }
+  }
+}

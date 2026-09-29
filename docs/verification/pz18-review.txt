@@ -1,0 +1,23 @@
+CR-01: before fix, 2 regression tests failed: stale title ST-1 instead of ST-2; mutation target 2 instead of displayed 1.
+After fix:
+✔ JSON success sends CSRF and balances loading (49.127041ms)
+✔ 204 needs no JSON (0.196709ms)
+✔ validation and status errors are human readable (3.577708ms)
+✔ offline and invalid JSON reset loading (0.5795ms)
+✔ abort preserves cancellation (0.287958ms)
+✔ late detail response cannot replace the latest order or mutation target (5.923125ms)
+✔ failed replacement preserves the visible order and its mutation target (2.020417ms)
+✔ escape user data and null (1.4205ms)
+✔ money supports zero, decimals and invalid values (54.4255ms)
+✔ overdue excludes ready and delivered (0.832667ms)
+✔ search recognizes exact order number and encodes text (1.17575ms)
+✔ error presentation handles nested response (0.220083ms)
+✔ form fields escape labels, values and option labels (0.343083ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164.921667

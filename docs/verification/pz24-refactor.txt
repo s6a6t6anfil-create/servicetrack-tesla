@@ -1,0 +1,63 @@
+before:
+✔ JSON success sends CSRF and balances loading (38.299458ms)
+✔ 204 needs no JSON (0.223916ms)
+✔ validation and status errors are human readable (1.396667ms)
+✔ offline and invalid JSON reset loading (0.384208ms)
+✔ abort preserves cancellation (0.31025ms)
+✔ late detail response cannot replace the latest order or mutation target (6.207166ms)
+✔ failed replacement preserves the visible order and its mutation target (1.782041ms)
+✔ escape user data and null (1.686959ms)
+✔ money supports zero, decimals and invalid values (41.185625ms)
+✔ overdue excludes ready and delivered (0.881041ms)
+✔ search recognizes exact order number and encodes text (0.874833ms)
+✔ error presentation handles nested response (0.125875ms)
+✔ form fields escape labels, values and option labels (0.19925ms)
+✔ money: exact currency formatting, zero and rounding (44.535583ms)
+✔ money: non-finite and malformed values have a safe fallback (0.112833ms)
+✔ searchParams: exact order number and all order filters (1.292ms)
+✔ searchParams: whitespace, partial numbers and query injection remain data (0.533125ms)
+✔ escapeHTML: escapes all markup characters and preserves Ukrainian text (0.11975ms)
+✔ escapeHTML: absent and scalar values are rendered predictably (0.09325ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 130.971292
+
+
+after:
+✔ JSON success sends CSRF and balances loading (25.798084ms)
+✔ 204 needs no JSON (0.13725ms)
+✔ validation and status errors are human readable (1.154667ms)
+✔ offline and invalid JSON reset loading (0.257542ms)
+✔ abort preserves cancellation (0.132875ms)
+✔ late detail response cannot replace the latest order or mutation target (7.071667ms)
+✔ failed replacement preserves the visible order and its mutation target (1.549375ms)
+✔ escape user data and null (0.861125ms)
+✔ money supports zero, decimals and invalid values (40.114042ms)
+✔ overdue excludes ready and delivered (0.526291ms)
+✔ search recognizes exact order number and encodes text (0.413041ms)
+✔ error presentation handles nested response (0.122125ms)
+✔ form fields escape labels, values and option labels (0.195917ms)
+✔ money: exact currency formatting, zero and rounding (36.588708ms)
+✔ money: non-finite and malformed values have a safe fallback (0.090583ms)
+✔ searchParams: exact order number and all order filters (0.698125ms)
+✔ searchParams: whitespace, partial numbers and query injection remain data (0.504125ms)
+✔ escapeHTML: escapes all markup characters and preserves Ukrainian text (0.1185ms)
+✔ escapeHTML: absent and scalar values are rendered predictably (0.093459ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.364209
+
+
+equivalence:
+PASS: 48 before/after comparisons: result, exact errors, request headers/options, loading sequence. Baseline bb273ec.
+PASS: both versions keep loading active until delayed JSON parsing completes.

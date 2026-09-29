@@ -1,0 +1,12 @@
+{
+  "isolated_seed_orders": 4,
+  "isolated_seed_users": 2,
+  "credential_mode": "0600",
+  "main_database_unchanged": true,
+  "invalid_session_rejected": true,
+  "busy_port_rejected": true,
+  "fade_transitions": 8,
+  "autoplay": false,
+  "slide_content_unchanged": true,
+  "powerpoint_playback_verified": false
+}

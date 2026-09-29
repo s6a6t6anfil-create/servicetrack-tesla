@@ -1,0 +1,48 @@
+- complementary:
+  - link "ST ServiceTrack TESLA WORKSHOP":
+    - /url: "#orders"
+    - text: ST
+    - text: ServiceTrack
+    - generic: TESLA WORKSHOP
+  - navigation "Головне меню":
+    - button "Замовлення ↗":
+      - text: Замовлення
+      - generic: ↗
+    - button "Клієнти"
+    - button "Автомобілі"
+  - text: qa_pz26
+  - generic: Адміністратор
+  - button "Вийти з облікового запису"
+- main:
+  - heading "Замовлення" [level=1]
+  - paragraph: Від першого звернення до видачі автомобіля.
+  - button "+ Нове замовлення"
+  - status
+  - region "Показники поточної вибірки":
+    - text: Замовлень у вибірці
+    - strong: "0"
+    - text: Активних на сторінці
+    - strong: "0"
+    - text: Прострочених на сторінці
+    - strong: "0"
+  - generic: Пошук
+  - textbox "Пошук":
+    - /placeholder: VIN, клієнт або номер ST-0001
+    - text: PZ26-NO-MATCH
+  - combobox "Статус замовлення":
+    - option "Усі статуси" [selected]
+    - option "Прийнято"
+    - option "Діагностика"
+    - option "Очікує погодження"
+    - option "Очікує запчастин"
+    - option "У ремонті"
+    - option "Готово"
+    - option "Видано"
+  - checkbox "Прострочені"
+  - text: Прострочені
+  - button "Знайти" [active]
+  - paragraph: Записів немає. Зміни фільтри або додай перший запис.
+  - button "← Назад" [disabled]
+  - generic: 0 записів · сторінка 1
+  - button "Далі →" [disabled]
+  - generic: ServiceTrack Tesla · Навчальний MVP · Дані вводяться вручну

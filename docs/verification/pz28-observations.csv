@@ -1,0 +1,11 @@
+participant,experience,date,commit,browser_os_device,role,scenario,start,end,technical_pause_seconds,result,status,hints,guide_used,verbatim_comment,difficulty,evidence,issue,retest
+U1,,,,,admin,S1,,,,,не запускалося,,,,,,,
+U1,,,,,admin,S2,,,,,не запускалося,,,,,,,
+U1,,,,,admin,S4,,,,,не запускалося,,,,,,,
+U1,,,,,admin,S5,,,,,не запускалося,,,,,,,
+U2,,,,,mechanic,S2,,,,,не запускалося,,,,,,,
+U2,,,,,mechanic,S3,,,,,не запускалося,,,,,,,
+U3_optional,,,,,admin,S1,,,,,не запускалося,,,,,,,
+U3_optional,,,,,admin,S2,,,,,не запускалося,,,,,,,
+U3_optional,,,,,admin,S4,,,,,не запускалося,,,,,,,
+U3_optional,,,,,admin,S5,,,,,не запускалося,,,,,,,

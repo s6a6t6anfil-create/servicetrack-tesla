@@ -1,0 +1,30 @@
+✔ JSON success sends CSRF and balances loading (43.446167ms)
+✔ 204 needs no JSON (0.197334ms)
+✔ validation and status errors are human readable (1.806917ms)
+✔ offline and invalid JSON reset loading (0.41025ms)
+✔ abort preserves cancellation (0.219708ms)
+✔ late detail response cannot replace the latest order or mutation target (5.885125ms)
+✔ failed replacement preserves the visible order and its mutation target (1.185792ms)
+✔ closing detail invalidates a pending response before it can reopen (1.492708ms)
+✔ a failed read from an open dialog reports inside that dialog (0.961083ms)
+✔ escape user data and null (1.155792ms)
+✔ money supports zero, decimals and invalid values (42.971625ms)
+✔ overdue excludes ready and delivered (0.781625ms)
+✔ search recognizes exact order number and encodes text (0.297041ms)
+✔ error presentation handles nested response (0.15ms)
+✔ form fields escape labels, values and option labels (0.277334ms)
+✔ Ukrainian record count handles singular plural and teens (0.215875ms)
+✔ money: exact currency formatting, zero and rounding (45.411875ms)
+✔ money: non-finite and malformed values have a safe fallback (0.1455ms)
+✔ searchParams: exact order number and all order filters (0.737ms)
+✔ searchParams: whitespace, partial numbers and query injection remain data (1.056584ms)
+✔ escapeHTML: escapes all markup characters and preserves Ukrainian text (0.247708ms)
+✔ escapeHTML: absent and scalar values are rendered predictably (0.234125ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144.705333
