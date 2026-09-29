@@ -29,3 +29,10 @@
 
 ## BUG-004 — Unicode та надмірні ID у query спричиняли збій
 Пріоритет: Medium. Відтворення: GET /api/orders/?vehicle=² або /api/vehicles/?customer=<100 цифр>. До виправлення: ValueError/OverflowError. Після:400. Причина: isdigit без перевірки ASCII і діапазону SQLite. Виправлено parse_identifier. Регресія test_invalid_identifier_filters_return_400 пройшла;21серверний тест PASS.
+
+
+## ПЗ23: підтверджені відкриті дефекти
+
+- [BUG-005](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/9): Open; повний опис у [bugs/BUG-005.md](bugs/BUG-005.md).
+- [BUG-006](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/10): Open; повний опис у [bugs/BUG-006.md](bugs/BUG-006.md).
+- [BUG-007](https://github.com/s6a6t6anfil-create/servicetrack-tesla/issues/11): Open; повний опис у [bugs/BUG-007.md](bugs/BUG-007.md).
