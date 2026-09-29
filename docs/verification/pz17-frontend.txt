@@ -1,0 +1,19 @@
+✔ JSON success sends CSRF and balances loading (40.791667ms)
+✔ 204 needs no JSON (0.208666ms)
+✔ validation and status errors are human readable (2.420084ms)
+✔ offline and invalid JSON reset loading (0.411542ms)
+✔ abort preserves cancellation (0.248084ms)
+✔ escape user data and null (1.224375ms)
+✔ money supports zero, decimals and invalid values (50.25325ms)
+✔ overdue excludes ready and delivered (0.734166ms)
+✔ search recognizes exact order number and encodes text (0.948666ms)
+✔ error presentation handles nested response (0.185083ms)
+✔ form fields escape labels, values and option labels (0.381375ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.520459
