@@ -1,0 +1,226 @@
+- tablist:
+  - tab "Summary":
+    - generic: Summary
+  - tab "Filmstrip":
+    - generic: Filmstrip
+  - tab "Waterfall" [active] [selected]:
+    - generic: Waterfall
+  - tab "Assets":
+    - generic: Assets
+  - tab "JavaScript":
+    - generic: JavaScript
+- tabpanel "Waterfall"
+- menubar:
+  - menuitem "Export":
+    - generic: Export
+- generic: URL
+- generic "https://clinal-ameer-spottily.ngrok-free.dev/"
+- generic: Configuration
+- generic: Desktop
+- img "browser"
+- generic: Chrome v148
+- img "connectivity"
+- generic: WiFi (240/120 Mbps and 2ms RTT)
+- generic: Columbus, Ohio, USA
+- generic: First Contentful Paint
+- generic: 822ms
+- generic: Cumulative Layout Shift
+- generic: "0.107"
+- generic: Event Details
+- generic: Total Blocking Time
+- generic: 52ms
+- generic: Largest Contentful Paint
+- generic: 822ms
+- generic: Event Details
+- generic: Document Complete
+- generic: 1052ms
+- generic: Speed Index
+- generic: 858ms
+- button "Video Video":
+  - generic: Video
+  - img "Video"
+- paragraph: Visual Change
+- paragraph: Time To First Byte
+- paragraph: First Contentful Paint
+- paragraph: Largest Contentful Paint
+- paragraph: Layout Shift
+- generic: 0s
+- generic: 0.1s
+- generic: 0.2s
+- generic: 0.3s
+- generic: 0.4s
+- generic: 0.5s
+- generic: 0.6s
+- generic: 0.7s
+- generic: 0.8s
+- generic: 0.9s
+- generic: 1s
+- generic: 1.1s
+- generic: 1.2s
+- generic: 1.3s
+- generic: 1.4s
+- generic: 1.5s
+- img "Filmstrip frame capture at time 0"
+- img "Filmstrip frame capture at time 100"
+- img "Filmstrip frame capture at time 200"
+- img "Filmstrip frame capture at time 300"
+- img "Filmstrip frame capture at time 400"
+- img "Filmstrip frame capture at time 500"
+- img "Filmstrip frame capture at time 600"
+- img "Filmstrip frame capture at time 700"
+- img "Filmstrip frame capture at time 800"
+- img "Filmstrip frame capture at time 900"
+- img "Filmstrip frame capture at time 1000"
+- img "Filmstrip frame capture at time 1100"
+- img "Filmstrip frame capture at time 1200"
+- img "Filmstrip frame capture at time 1300"
+- img "Filmstrip frame capture at time 1400"
+- img "Filmstrip frame capture at time 1500"
+- tablist:
+  - tab "Waterfall" [selected]:
+    - generic: Waterfall
+  - tab "Connection":
+    - generic: Connection
+  - tab "Request Table":
+    - generic: Request Table
+  - tab "Images":
+    - generic: Images
+  - tab "Custom Metrics":
+    - generic: Custom Metrics
+- tabpanel "Waterfall"
+- menubar:
+  - searchbox "Search URL"
+  - menuitem "Download Waterfall":
+    - generic: Download Waterfall
+  - menuitem "Customize Waterfall":
+    - generic: Customize Waterfall
+  - switch "Waterfall Legend" [checked]
+  - generic: Waterfall Legend
+- generic: Start Render
+- generic: First Contentful Paint
+- generic: Largest Contentful Paint
+- generic: Layout Shift
+- generic: DOM Interactive
+- generic: Dom Content Loaded
+- generic: On Load
+- generic: Document Complete
+- generic: Render Blocking Resource
+- generic: Insecure Request
+- generic: 3xx response
+- generic: 4xx+ response
+- generic: "Doesn`t Belong to Main Doc"
+- generic: User & Element Timings
+- generic: Wait
+- generic: Dns
+- generic: Connect
+- generic: Ssl
+- generic: Html
+- generic: Js
+- generic: Css
+- generic: Image
+- generic: Flash
+- generic: Font
+- generic: Video
+- generic: Other
+- generic: Js Execution
+- table:
+  - row "# URL":
+    - columnheader
+    - columnheader "#":
+      - generic: "#"
+    - columnheader "URL":
+      - generic: URL
+    - columnheader:
+  - rowgroup:
+    - row "1 clinal-ameer-spottily.ngrok-free.dev/":
+      - cell
+      - cell "1":
+        - generic: "1"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/"
+      - cell
+    - row "2 clinal-ameer-spottily.ngrok-free.dev/static/app.css":
+      - cell
+      - cell "2":
+        - generic: "2"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/static/app.css":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/static/app.css"
+      - cell
+    - row "3 clinal-ameer-spottily.ngrok-free.dev/static/app.js":
+      - cell
+      - cell "3":
+        - generic: "3"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/static/app.js":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/static/app.js"
+      - cell
+    - row "4 clinal-ameer-spottily.ngrok-free.dev/static/api.js":
+      - cell
+      - cell "4":
+        - generic: "4"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/static/api.js":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/static/api.js"
+      - cell
+    - row "5 clinal-ameer-spottily.ngrok-free.dev/static/form-fields.js":
+      - cell
+      - cell "5":
+        - generic: "5"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/static/form-fields.js":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/static/form-fields.js"
+      - cell
+    - row "6 clinal-ameer-spottily.ngrok-free.dev/static/helpers.js":
+      - cell
+      - cell "6":
+        - generic: "6"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/static/helpers.js":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/static/helpers.js"
+      - cell
+    - row "7 clinal-ameer-spottily.ngrok-free.dev/api/session/":
+      - cell
+      - cell "7":
+        - generic: "7"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/api/session/":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/api/session/"
+      - cell
+    - row "8 clinal-ameer-spottily.ngrok-free.dev/favicon.ico":
+      - cell
+      - cell "8":
+        - generic: "8"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/favicon.ico":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/favicon.ico"
+      - cell
+    - row "9 clinal-ameer-spottily.ngrok-free.dev/api/orders/?page=1":
+      - cell
+      - cell "9":
+        - generic: "9"
+      - cell "clinal-ameer-spottily.ngrok-free.dev/api/orders/?page=1":
+        - generic "clinal-ameer-spottily.ngrok-free.dev/api/orders/?page=1"
+      - cell
+    - row "CPU Utilization":
+      - cell
+      - cell
+      - cell "CPU Utilization":
+        - generic "CPU Utilization"
+      - cell
+    - row "Bandwidth In (0 - 7 mbps)":
+      - cell
+      - cell
+      - cell "Bandwidth In (0 - 7 mbps)":
+        - generic "Bandwidth In (0 - 7 mbps)"
+      - cell
+    - row "Browser Main Thread":
+      - cell
+      - cell
+      - cell "Browser Main Thread":
+        - generic "Browser Main Thread"
+      - cell
+    - row "Long Task":
+      - cell
+      - cell
+      - cell "Long Task":
+        - generic "Long Task"
+      - cell
+- paragraph:
+  - text: Confidential and Proprietary ©
+  - link "Catchpoint Systems, Inc.":
+    - /url: https://www.catchpoint.com
+  - text: All rights reserved.

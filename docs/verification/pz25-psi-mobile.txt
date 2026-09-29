@@ -1,0 +1,284 @@
+- banner:
+  - link "PageSpeed Insights logo PageSpeed Insights":
+    - /url: ./
+    - img "PageSpeed Insights logo"
+    - generic: PageSpeed Insights
+  - button "Копіювати посилання":
+    - generic: Копіювати посилання
+  - generic: Документи
+  - link "Документи":
+    - /url: https://developers.google.com/speed/docs/insights/v5/about
+- generic: Цей сайт використовує файли cookie від Google, щоб надавати послуги й аналізувати трафік.
+- generic: Докладніше.
+- link "Докладніше.":
+  - /url: https://policies.google.com/technologies/cookies
+- button "OK.":
+  - generic: OK.
+- generic: Звіт від 29 вер. 2026 р., 18:55:13
+- textbox:
+  - /placeholder: Введіть URL-адресу веб-сторінки
+  - text: https://clinal-ameer-spottily.ngrok-free.dev/
+- paragraph: Введіть дійсну URL-адресу
+- button "Аналізувати":
+  - generic: Аналізувати
+- tablist:
+  - tab "Мобільний" [selected]:
+    - generic: smartphone
+    - generic: Мобільний
+  - tab "Комп’ютер":
+    - generic: computer
+    - generic: Комп’ютер
+- tabpanel "Мобільний":
+  - generic: Дізнайтеся, як відбувається взаємодія в реальних користувачів
+  - button "button":
+  - generic: Немає даних
+  - separator
+  - generic: Виявляйте проблеми з продуктивністю
+  - article:
+    - link "99 Ефективність":
+      - /url: "#performance"
+      - generic: "99"
+      - generic: Ефективність
+    - link "100 Доступність":
+      - /url: "#accessibility"
+      - generic: "100"
+      - generic: Доступність
+    - link "100 Оптимальні методи":
+      - /url: "#best-practices"
+      - generic: "100"
+      - generic: Оптимальні методи
+    - link "50 Оптим. пошук. систем":
+      - /url: "#seo"
+      - generic: "50"
+      - generic: Оптим. пошук. систем
+    - link "2/2 Агентний вебперегляд":
+      - /url: "#agentic-browsing"
+      - generic: 2/2
+      - generic: Агентний вебперегляд
+    - text: Значення приблизні й можуть відрізнятися.
+    - link "Значення ефективності визначено":
+      - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+    - text: на основі цих показників.
+    - link "Показати калькулятор.":
+      - /url: https://googlechrome.github.io/lighthouse/scorecalc/#FCP=931&LCP=931&TBT=35&CLS=0.07&SI=931&TTI=1016&device=mobile&version=13.5.0
+    - generic: 0–49
+    - generic: 50–89
+    - generic: 90–100
+    - img "Final Screenshot"
+    - checkbox "Toggle the display of metric descriptions"
+    - generic: Показники
+    - generic: Розгорнути
+    - generic: First Contentful Paint
+    - generic: 0,9 с
+    - generic: Largest Contentful Paint
+    - generic: 0,9 с
+    - generic: Total Blocking Time
+    - generic: 40 мс
+    - generic: Cumulative Layout Shift
+    - generic: "0.069"
+    - generic: Speed Index
+    - generic: 0,9 с
+    - list:
+      - listitem: Captured at 29 вер. 2026 р., 18:55 GMT+3
+      - listitem: Емульований пристрій Moto G Power with Lighthouse 13.5.0
+      - listitem: Сеанс із переглядом однієї сторінки
+      - listitem: Перше завантаження сторінки
+      - listitem: Обмеження пропускної спроможності для мережі 4G з низькою швидкістю
+      - listitem: Using HeadlessChromium 153.0.8010.36 with lr
+    - button "Переглянути веб-додаток Treemap"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - generic: "Показано аудити, релевантні для:"
+    - radio "All" [checked]
+    - generic: All
+    - radio "FCP"
+    - generic "First Contentful Paint": FCP
+    - radio "LCP"
+    - generic "Largest Contentful Paint": LCP
+    - radio "TBT"
+    - generic "Total Blocking Time": TBT
+    - radio "CLS"
+    - generic "Cumulative Layout Shift": CLS
+    - generic: Статистика
+    - 'generic "Запити, які блокують відображення —Очікуване заощадження: 300 мс"':
+      - generic: Запити, які блокують відображення
+      - text: "—Очікуване заощадження: 300 мс"
+    - generic "Дерево залежностей мережі":
+      - generic: Дерево залежностей мережі
+    - 'generic "Використовуйте ефективні значення TTL кешу —Очікуване заощадження: 28 КіБ"':
+      - generic: Використовуйте ефективні значення TTL кешу
+      - text: "—Очікуване заощадження: 28 КіБ"
+    - 'generic "Затримка запиту на документ —Очікуване заощадження: 2 КіБ"':
+      - generic: Затримка запиту на документ
+      - text: "—Очікуване заощадження: 2 КіБ"
+    - generic "Причини зміщення макета":
+      - generic: Причини зміщення макета
+    - generic "Розподіл LCP":
+      - generic: Розподіл LCP
+    - text: Ця статистика також доступна на панелі "Продуктивність" в Інструментах розробника Chrome. Щоб переглянути докладнішу інформацію,
+    - link "запишіть трасування":
+      - /url: https://developer.chrome.com/docs/devtools/performance/reference?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic: Діагностика
+    - generic "Уникайте тривалих завдань у головному потоці —Знайдено 1 тривале завдання":
+      - generic: Уникайте тривалих завдань у головному потоці
+      - text: —Знайдено 1 тривале завдання
+    - text: Докладніше про ефективність додатка. Ці числа не
+    - link "впливають безпосередньо":
+      - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+    - text: на значення ефективності.
+    - generic "Виконані перевірки (20) Показати":
+      - generic: Виконані перевірки (20)
+      - generic: Показати
+    - text: — — —
+    - heading "100 Доступність" [level=2]:
+      - generic: "100"
+      - generic: Доступність
+    - text: Ці перевірки визначають можливості для
+    - link "покращення доступності веб-додатка":
+      - /url: https://developer.chrome.com/docs/lighthouse/accessibility/?utm_source=lighthouse&utm_medium=lr
+    - text: . Функція автоматичного визначення може виявляти лише певні проблеми й не гарантує доступність вашого веб-додатка, тому радимо також проводити
+    - link "перевірки вручну":
+      - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic "Додаткові елементи, які потрібно перевірити вручну (10) Сховати":
+      - generic: Додаткові елементи, які потрібно перевірити вручну (10)
+      - generic: Сховати
+    - generic "Interactive controls are keyboard focusable":
+      - generic: Interactive controls are keyboard focusable
+    - generic "Interactive elements indicate their purpose and state":
+      - generic: Interactive elements indicate their purpose and state
+    - generic "The page has a logical tab order":
+      - generic: The page has a logical tab order
+    - generic "Visual order on the page follows DOM order":
+      - generic: Visual order on the page follows DOM order
+    - generic "User focus is not accidentally trapped in a region":
+      - generic: User focus is not accidentally trapped in a region
+    - generic "The user's focus is directed to new content added to the page":
+      - generic: The user's focus is directed to new content added to the page
+    - generic "HTML5 landmark elements are used to improve navigation":
+      - generic: HTML5 landmark elements are used to improve navigation
+    - generic "Offscreen content is hidden from assistive technology":
+      - generic: Offscreen content is hidden from assistive technology
+    - generic "Custom controls have associated labels":
+      - generic: Custom controls have associated labels
+    - generic "Custom controls have ARIA roles":
+      - generic: Custom controls have ARIA roles
+    - text: Ці елементи опрацьовують області, які не може охопити автоматизований інструмент перевірки. Докладніше читайте в нашому посібнику з
+    - link "перевірки доступності":
+      - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic "Виконані перевірки (22) Показати":
+      - generic: Виконані перевірки (22)
+      - generic: Показати
+    - generic "Не застосовуються (41) Показати":
+      - generic: Не застосовуються (41)
+      - generic: Показати
+    - heading "100 Оптимальні методи" [level=2]:
+      - generic: "100"
+      - generic: Оптимальні методи
+    - generic: Довіра й безпека
+    - generic "Переконайтеся, що CSP допомагає проти атак XSS":
+      - generic: Переконайтеся, що CSP допомагає проти атак XSS
+    - generic "Використовуйте надійні правила HSTS":
+      - generic: Використовуйте надійні правила HSTS
+    - generic "Зменште ризик міжсайтного скриптингу (XSS) на основі DOM за допомогою Trusted Types":
+      - generic: Зменште ризик міжсайтного скриптингу (XSS) на основі DOM за допомогою Trusted Types
+    - generic: Сумісність веб-переглядача
+    - generic "Функції Baseline":
+      - generic: Функції Baseline
+    - generic "Виконані перевірки (13) Показати":
+      - generic: Виконані перевірки (13)
+      - generic: Показати
+    - generic "Не застосовуються (4) Показати":
+      - generic: Не застосовуються (4)
+      - generic: Показати
+    - heading "50 Оптим. пошук. систем" [level=2]:
+      - generic: "50"
+      - generic: Оптим. пошук. систем
+    - text: Ці перевірки допоможуть подбати про те, щоб ваша сторінка відповідала основним рекомендаціям щодо пошукової оптимізації. Є чимало інших факторів, які не враховує Lighthouse і які можуть вплинути на рейтинг сторінки в результатах пошуку (наприклад, продуктивність відповідно до
+    - link "Основних веб-показників":
+      - /url: https://web.dev/explore/vitals?utm_source=lighthouse&utm_medium=lr
+    - text: ).
+    - link "Докладніше про основи Google Пошуку.":
+      - /url: https://support.google.com/webmasters/answer/35769
+    - generic: Сканування й індексування
+    - generic "Сторінку не можна індексувати":
+      - generic: Сторінку не можна індексувати
+    - generic: Щоб ваш вміст з’являвся в результатах пошуку, веб-сканерам потрібно надати доступ до додатка.
+    - generic: Практичні поради щодо вмісту
+    - generic "Документ не містить метаопису":
+      - generic: Документ не містить метаопису
+    - generic: Відформатуйте HTML так, щоб веб-сканери краще розуміли вміст вашого додатка.
+    - generic "Додаткові елементи, які потрібно перевірити вручну (1) Показати":
+      - generic: Додаткові елементи, які потрібно перевірити вручну (1)
+      - generic: Показати
+    - generic: Щоб отримати додаткові практичні поради щодо оптимізації пошукових систем, скористайтеся додатковими засобами перевірки на своєму сайті.
+    - generic "Виконані перевірки (5) Показати":
+      - generic: Виконані перевірки (5)
+      - generic: Показати
+    - generic "Не застосовуються (3) Показати":
+      - generic: Не застосовуються (3)
+      - generic: Показати
+    - heading "2/2 Агентний вебперегляд" [level=2]:
+      - generic: 2/2
+      - generic: Агентний вебперегляд
+    - text: Ці перевірки забезпечують високу якість вебсайтів і їх доступність для агентів на основі ШІ, а також підтверджують правильність інтеграції
+    - link "WebMCP":
+      - /url: https://goo.gle/lighthouse-agentic-web
+    - text: . Ця категорія ще на стадії розробки, тому може змінюватися.
+    - generic "Виконані перевірки (2) Показати":
+      - generic: Виконані перевірки (2)
+      - generic: Показати
+    - text: — —
+    - generic "Не застосовуються (5) Показати":
+      - generic: Не застосовуються (5)
+      - generic: Показати
+- text: — — — — — — — —
+- contentinfo:
+  - generic: Більше про PageSpeed Insights
+  - link "Що нового":
+    - /url: https://developers.google.com/speed/docs/insights/release_notes
+  - link "Документація":
+    - /url: https://developers.google.com/speed/docs/insights/v5/about
+  - link "Докладніше про ефективність веб-сайту":
+    - /url: https://developers.google.com/speed
+  - link "Поставте запитання на Stack Overflow":
+    - /url: https://stackoverflow.com/questions/tagged/pagespeed-insights
+  - link "Список розсилки":
+    - /url: https://groups.google.com/g/pagespeed-insights-discuss
+  - generic: Пов’язаний контент
+  - link "Оновлення":
+    - /url: https://developer.chrome.com/blog
+  - link "Основи веб-дизайну":
+    - /url: https://developers.google.com/focus/web-development
+  - link "Приклади використання":
+    - /url: https://web.dev/case-studies
+  - link "Подкасти":
+    - /url: https://web.dev/shows
+  - generic: Зв’язок
+  - link "Твіттер":
+    - /url: https://twitter.com/ChromiumDev
+  - link "YouTube":
+    - /url: https://www.youtube.com/user/ChromeDevelopers
+  - link "Google Developers Logo":
+    - /url: https://developers.google.com/
+    - img "Google Developers Logo"
+  - link "Chrome":
+    - /url: https://developer.chrome.com/
+  - link "Firebase":
+    - /url: https://firebase.google.com/
+  - link "Усі продукти":
+    - /url: https://developers.google.com/products/
+  - link "Умови та Політика конфіденційності":
+    - /url: https://policies.google.com/
+  - text: Щоб дізнатися більше, перегляньте
+  - link "правила користування сайтом Google Developers":
+    - /url: https://developers.google.com/terms/site-policies
+  - text: .

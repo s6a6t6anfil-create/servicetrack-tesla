@@ -1,0 +1,170 @@
+  - iframe:
+    - tablist:
+      - tab "Summary" [selected]:
+        - generic: Summary
+      - tab "Filmstrip":
+        - generic: Filmstrip
+      - tab "Waterfall":
+        - generic: Waterfall
+      - tab "Assets":
+        - generic: Assets
+      - tab "JavaScript":
+        - generic: JavaScript
+    - tabpanel "Summary"
+    - menubar:
+      - menuitem "Export":
+        - generic: Export
+    - link "https://clinal-ameer-spottily.ngrok-free.dev/":
+      - /url: https://clinal-ameer-spottily.ngrok-free.dev/
+    - generic: Configuration
+    - generic: Desktop
+    - img "browser"
+    - generic: Chrome v148
+    - img "connectivity"
+    - generic: WiFi (240/120 Mbps and 2ms RTT)
+    - generic: Columbus, Ohio, USA
+    - generic: Run Time
+    - generic: Sep 29, 2026 15:55:15 UTC
+    - heading "Is It Quick?" [level=4]
+    - paragraph:
+      - generic: Not Bad...
+      - text: This site was quick to connect and deliver initial code. It began rendering content very quickly. There were 1 render-blocking requests. The largest content rendered quickly.
+    - heading "Is It Usable?" [level=4]
+    - paragraph:
+      - generic: Not Bad...
+      - text: This site had minor layout shifts. It took little time to become interactive. Some HTML was generated after delivery, potentially delaying usability.
+    - heading "Is It Resilient?" [level=4]
+    - paragraph:
+      - generic: Not Bad...
+      - text: This site had no render-blocking 3rd party requests that could be a single point of failure. It had no security issues. Some HTML was generated after delivery, which can cause fragility.
+    - generic: Page Performance
+    - text: First Contentful Paint
+    - generic: 0.822s
+    - text: Largest Contentful Paint
+    - generic: 0.822s
+    - text: Cumulative Layout Shift
+    - generic: "0.107"
+    - text: Time To First Byte
+    - generic: 0.288s
+    - text: Start Render
+    - generic: 0.7s
+    - text: Speed Index
+    - generic: 0.858s
+    - text: Total Blocking Time
+    - generic: 0.052s
+    - text: Page Weight
+    - generic: 118KB
+    - text: DC Time
+    - generic: 1.052s
+    - text: DC Bytes
+    - generic: 118KB
+    - text: Total Time
+    - generic: 1.333s
+    - text: Total Requests
+    - generic: "9"
+    - paragraph: Visual Change
+    - paragraph: Time To First Byte
+    - paragraph: First Contentful Paint
+    - paragraph: Largest Contentful Paint
+    - paragraph: Layout Shift
+    - generic: 0s
+    - generic: 0.1s
+    - generic: 0.2s
+    - generic: 0.3s
+    - generic: 0.4s
+    - generic: 0.5s
+    - generic: 0.6s
+    - generic: 0.7s
+    - generic: 0.8s
+    - generic: 0.9s
+    - generic: 1s
+    - generic: 1.1s
+    - generic: 1.2s
+    - generic: 1.3s
+    - generic: 1.4s
+    - generic: 1.5s
+    - img "Filmstrip frame capture at time 0"
+    - img "Filmstrip frame capture at time 100"
+    - img "Filmstrip frame capture at time 200"
+    - img "Filmstrip frame capture at time 300"
+    - img "Filmstrip frame capture at time 400"
+    - img "Filmstrip frame capture at time 500"
+    - img "Filmstrip frame capture at time 600"
+    - img "Filmstrip frame capture at time 700"
+    - img "Filmstrip frame capture at time 800"
+    - img "Filmstrip frame capture at time 900"
+    - img "Filmstrip frame capture at time 1000"
+    - img "Filmstrip frame capture at time 1100"
+    - img "Filmstrip frame capture at time 1200"
+    - img "Filmstrip frame capture at time 1300"
+    - img "Filmstrip frame capture at time 1400"
+    - img "Filmstrip frame capture at time 1500"
+    - generic: Individual Runs
+    - grid:
+      - row "Run Download 30X 40X Image Render Start Document Complete Largest Contentful Paint Test Complete Total Bytes":
+        - columnheader "Run":
+          - generic "Run":
+            - button "Run":
+              - generic: Run
+        - columnheader "Download":
+          - generic "Download":
+            - button "Download":
+              - generic: Download
+        - columnheader
+        - columnheader "30X":
+          - generic "30X":
+            - button "30X":
+              - generic: 30X
+        - columnheader "40X":
+          - generic "40X":
+            - button "40X":
+              - generic: 40X
+        - columnheader "Image":
+          - generic "Image":
+            - button "Image":
+              - generic: Image
+        - columnheader "Render Start":
+          - generic "Render Start":
+            - button "Render Start":
+              - generic: Render Start
+        - columnheader "Document Complete":
+          - generic "Document Complete":
+            - button "Document Complete":
+              - generic: Document Complete
+        - columnheader "Largest Contentful Paint":
+          - generic "Largest Contentful Paint":
+            - button "Largest Contentful Paint":
+              - generic: Largest Contentful Paint
+        - columnheader "Test Complete":
+          - generic "Test Complete":
+            - button "Test Complete":
+              - generic: Test Complete
+        - columnheader "Total Bytes":
+          - generic "Total Bytes":
+            - button "Total Bytes":
+              - generic: Total Bytes
+      - row "clinal-ameer-spottily.ngrok-free.dev Trace 0 1 700 1 052 822 1 333 120 675":
+        - gridcell "clinal-ameer-spottily.ngrok-free.dev":
+          - generic: clinal-ameer-spottily.ngrok-free.dev
+        - gridcell "Trace":
+          - generic: Trace
+        - gridcell "0":
+          - generic "0"
+        - gridcell "1":
+          - generic "1"
+        - gridcell
+        - gridcell "700":
+          - generic: "700"
+        - gridcell "1 052":
+          - generic: 1 052
+        - gridcell "822":
+          - generic: "822"
+        - gridcell "1 333":
+          - generic: 1 333
+        - gridcell "120 675":
+          - generic: 120 675
+    - paragraph:
+      - text: Confidential and Proprietary ©
+      - link "Catchpoint Systems, Inc.":
+        - /url: https://www.catchpoint.com
+      - text: All rights reserved.
