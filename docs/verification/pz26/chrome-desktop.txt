@@ -1,0 +1,125 @@
+- complementary:
+  - link "ST ServiceTrack TESLA WORKSHOP":
+    - /url: "#orders"
+    - text: ST
+    - text: ServiceTrack
+    - generic: TESLA WORKSHOP
+  - navigation "Головне меню":
+    - button "Замовлення ↗":
+      - text: Замовлення
+      - generic: ↗
+    - button "Клієнти"
+    - button "Автомобілі"
+  - text: qa_pz26
+  - generic: Адміністратор
+  - button "Вийти з облікового запису"
+- main:
+  - heading "Замовлення" [level=1]
+  - paragraph: Від першого звернення до видачі автомобіля.
+  - button "+ Нове замовлення"
+  - status
+  - region "Показники поточної вибірки":
+    - text: Замовлень у вибірці
+    - strong: "1"
+    - text: Активних на сторінці
+    - strong: "0"
+    - text: Прострочених на сторінці
+    - strong: "0"
+  - generic: Пошук
+  - textbox "Пошук":
+    - /placeholder: VIN, клієнт або номер ST-0001
+    - text: ST-0007
+  - combobox "Статус замовлення":
+    - option "Усі статуси" [selected]
+    - option "Прийнято"
+    - option "Діагностика"
+    - option "Очікує погодження"
+    - option "Очікує запчастин"
+    - option "У ремонті"
+    - option "Готово"
+    - option "Видано"
+  - checkbox "Прострочені"
+  - text: Прострочені
+  - button "Знайти"
+  - table:
+    - rowgroup:
+      - row "Замовлення / клієнт Автомобіль Статус Строк Кошторис":
+        - columnheader "Замовлення / клієнт"
+        - columnheader "Автомобіль"
+        - columnheader "Статус"
+        - columnheader "Строк"
+        - columnheader "Кошторис"
+        - columnheader
+    - rowgroup:
+      - row "ST-0007 ПЗ17 Демо клієнт Model Y · TEST0000000000017 TEST0000000000017 Видано 2026-09-29 mechanic 1 000,00 ₴ Відкрити ↗":
+        - cell "ST-0007 ПЗ17 Демо клієнт":
+          - strong: ST-0007
+          - generic: ПЗ17 Демо клієнт
+        - cell "Model Y · TEST0000000000017 TEST0000000000017":
+          - strong: Model Y · TEST0000000000017
+          - generic: TEST0000000000017
+        - cell "Видано":
+          - generic: Видано
+        - cell "2026-09-29 mechanic":
+          - text: 2026-09-29
+          - generic: mechanic
+        - cell "1 000,00 ₴"
+        - cell "Відкрити ↗":
+          - button "Відкрити ↗"
+  - button "← Назад" [disabled]
+  - generic: 1 записів · сторінка 1
+  - button "Далі →" [disabled]
+  - generic: ServiceTrack Tesla · Навчальний MVP · Дані вводяться вручну
+- dialog:
+  - heading "ST-0007 · Model Y · TEST0000000000017" [level=2]
+  - button "Закрити замовлення": ×
+  - paragraph:
+    - generic: Клієнт
+    - text: ПЗ17 Демо клієнт
+  - paragraph:
+    - generic: Статус
+    - text: Видано
+  - paragraph:
+    - generic: Плановий строк
+    - text: 2026-09-29
+  - paragraph:
+    - generic: Механік
+    - text: mechanic
+  - paragraph: Замовлення видано. Редагування закрите; можна додати коментар.
+  - heading "Звернення" [level=3]
+  - paragraph: "ПЗ19: наскрізна перевірка взаємодії адміністратора й механіка"
+  - heading "Діагностика та коди помилок" [level=3]
+  - paragraph: "ПЗ19: тестовий огляд завершено, дані збережені механіком."
+  - paragraph: TEST-PZ19
+  - heading "Попередній кошторис · 1 000,00 ₴" [level=3]
+  - table:
+    - rowgroup:
+      - row "Позиція Кількість × ціна":
+        - columnheader "Позиція"
+        - columnheader "Кількість × ціна"
+        - columnheader
+    - rowgroup:
+      - 'row "ПЗ19: тестова діагностика Робота 1.25 × 800,00 ₴"':
+        - 'cell "ПЗ19: тестова діагностика Робота"':
+          - text: "ПЗ19: тестова діагностика"
+          - generic: Робота
+        - cell "1.25 × 800,00 ₴"
+        - cell
+  - heading "Історія та коментарі" [level=3]
+  - text: "ПЗ26 C1 Chrome desktop: перевірка збереження."
+  - generic: qa_pz26 · 29.09.2026, 19:09:45
+  - text: Готово → Видано
+  - generic: admin · 29.09.2026, 14:36:30
+  - text: У ремонті → Готово
+  - generic: mechanic · 29.09.2026, 14:35:27
+  - text: Діагностика → У ремонті
+  - generic: mechanic · 29.09.2026, 14:35:27
+  - text: "ПЗ19: передано адміністратору для перевірки."
+  - generic: mechanic · 29.09.2026, 14:35:27
+  - text: Прийнято → Діагностика
+  - generic: mechanic · 29.09.2026, 14:35:13
+  - text: Замовлення прийнято
+  - generic: admin · 29.09.2026, 14:34:39
+  - textbox "Новий коментар":
+    - /placeholder: Додати коментар…
+  - button "Додати"
