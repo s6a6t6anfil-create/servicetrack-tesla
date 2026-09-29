@@ -1,0 +1,51 @@
+Window: "Вхід · ServiceTrack Tesla", App: Safari.
+0 звичайне вікно Вхід · ServiceTrack Tesla, ID: SafariWindow?IsSecure=false&UUID=9FFCE263-FB45-4A7E-BF5F-EEF8D89839D1, Secondary Actions: Raise
+	1 група розділених областей
+		2 група закладок
+			3 область прокручування
+				4 HTML-контент Description: Вхід · ServiceTrack Tesla, URL: 127.0.0.1:8943/accounts/login/
+					5 container
+						6 text ST ServiceTrack
+						7 заголовок Робочий день починається тут., Value: 1
+							8 текст Робочий день починається тут.
+						9 текст Клієнти, ремонт і історія обслуговування в одному місці.
+						10 container
+							11 текст Ім’я користувача
+							12 текстове поле (settable) Ім’я користувача
+								13 кнопка автозаповнення пароля
+						14 container
+							15 текст Пароль
+							16 захищене текстове поле (settable) Пароль
+						17 кнопка Увійти
+						18 текст Обліковий запис надає адміністратор майстерні.
+	19 зображення WindowControlShadowView._shadowImageView
+	20 панель інструментів
+		21 container Secondary Actions: Перемістити далі, Вилучити з панелі інструментів
+			22 кнопка Description: показати бічну панель, Help: Показати бічну панель, ID: SidebarButton
+			23 кнопка меню Description: Селектор групи вкладок, ID: TabGroupPickerButton?TabGroup=
+		24 container BackForwardSegmentedControl
+			25 кнопка Description: Повернутись назад, Help: Показати попередню сторінку, ID: BackButton
+			26 кнопка (disabled) Description: Перейти вперед, Help: Показати наступну сторінку, ID: ForwardButton
+		27 container Secondary Actions: Перемісти назад, Перемістити далі, Вилучити з панелі інструментів
+			28 кнопка Меню сторінки, ID: AssistantButton
+			29 кнопка (disabled) Додати сторінку до Читанки, ID: OneStepBookmarkingButton
+			30 текстове поле (settable) Description: динамічне поле пошуку, Value: 127.0.0.1:8943/accounts/login/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			31 кнопка Доступний переклад, ID: TranslationButton
+			32 кнопка Перезавантажити цю сторінку, ID: ReloadButton
+		33 кнопка Description: Поширити, ID: ShareButton, Secondary Actions: Перемісти назад, Перемістити далі, Вилучити з панелі інструментів
+		34 кнопка Description: Нова вкладка, ID: NewTabButton, Secondary Actions: Перемісти назад, Перемістити далі, Вилучити з панелі інструментів
+		35 кнопка Description: Огляд вкладок, ID: TabOverviewButton, Secondary Actions: Перемісти назад, Вилучити з панелі інструментів
+	36 кнопка закривання
+	37 кнопка повноекранного режиму Help: ця кнопка також оптимізовує розмір вікна на екрані, Secondary Actions: оптимізувати вікно
+	38 кнопка згортання
+39 menu bar
+	40 Safari
+	41 Файл
+	42 Редагування
+	43 Перегляд, ID: SafariViewMenu
+	44 Історія
+	45 Закладки, ID: SafariBookmarksMenu
+	46 Вікно, ID: SafariWindowMenu
+	47 Довідка, ID: SafariHelpMenu
+
+The focused UI element is 12 текстове поле (settable) Ім’я користувача
