@@ -16,3 +16,6 @@ staticfiles/
 *.pem
 *.key
 backups/
+
+# Private, isolated presentation databases and credentials
+.demo/
