@@ -27,7 +27,7 @@ config/urls.py реєструє маршрути; config/settings.py визна�
 1. Завантаж гілку цієї документації та перейди до кореня проєкту. Гілки попередніх практичних робіт ще проходять через PR, тому main не слід вважати поточною повною версією.
 
 ```sh
-git clone --branch docs/pz29-technical \
+git clone --branch v1.0.0 \
   https://github.com/s6a6t6anfil-create/servicetrack-tesla.git
 cd servicetrack-tesla
 python3 -m venv .venv

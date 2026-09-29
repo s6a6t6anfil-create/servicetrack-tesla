@@ -2,6 +2,15 @@
 
 Навчальний MVP вебзастосунку для однієї незалежної майстерні Tesla. Клієнти, автомобілі, замовлення, сім статусів, діагностика й ручні коди помилок, кошторис, історія та коментарі. Проєкт не підключається до автомобілів і не є діагностичним приладом.
 
+## Зафіксований навчальний реліз
+
+Версія [v1.0.0](https://github.com/s6a6t6anfil-create/servicetrack-tesla/releases/tag/v1.0.0), стабільна гілка `release-v1.0.0`. Для перевірки всіх накопичених робіт використовуйте цей тег; попередні тематичні PR збережені як історія. [Release notes](RELEASE_NOTES.md), [підсумок ПЗ36](docs/36-release.md).
+
+```sh
+git clone --branch v1.0.0 https://github.com/s6a6t6anfil-create/servicetrack-tesla.git
+cd servicetrack-tesla
+```
+
 ## Локальний запуск
 Python 3.12, Node.js 22+ потрібен лише для тестів JavaScript.
 
