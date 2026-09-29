@@ -1,3 +1,4 @@
+import {input,area,select} from './form-fields.js';
 import {escapeHTML as e, money, isOverdue, searchParams, errorText} from './helpers.js';
 const $ = id => document.getElementById(id);
 let view='orders', session, currentPage=1, lastResult, currentOrder;
@@ -36,10 +37,7 @@ function render(rows){
   }
   $('content').innerHTML=`<div class="table-scroll"><table><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
-async function allOptions(resource){let result=[],url=`/api/${resource}/`;while(url){const d=await api(url);result.push(...d.results);url=d.next;}return result;}
-function input(name,label,value='',type='text',required=true,extra=''){return `<label>${e(label)}<input name="${name}" type="${type}" value="${e(value)}" ${required?'required':''} ${extra}></label>`;}
-function area(name,label,value='',required=false){return `<label class="wide">${e(label)}<textarea name="${name}" ${required?'required':''}>${e(value)}</textarea></label>`;}
-function select(name,label,options,value='',optional=false){return `<label>${e(label)}<select name="${name}" ${optional?'':'required'}>${optional?'<option value="">Не призначено</option>':'<option value="">Обери…</option>'}${options.map(o=>`<option value="${e(o.id)}" ${String(o.id)===String(value)?'selected':''}>${e(o.label)}</option>`).join('')}</select></label>`;}
+async function allOptions(resource,query=''){let result=[],url=`/api/${resource}/${query}`;while(url){const d=await api(url);result.push(...d.results);url=d.next;}return result;}
 async function edit(record=null,kind=view){
   $('form-error').textContent='';$('dialog-title').textContent=record?'Редагування':kind==='items'?'Додати роботу або запчастину':titles[kind][1];
   const r=record||{};
@@ -85,7 +83,7 @@ $('content').addEventListener('click',async ev=>{const t=ev.target;try{
   if(t.dataset.open)await showOrder(t.dataset.open);
   if(t.dataset.edit)await edit(lastResult.results.find(x=>x.id===Number(t.dataset.edit)));
   if(t.dataset.delete&&confirm('Видалити запис? Запис із пов’язаними даними видалити неможливо.')){await api(`/api/${view}/${t.dataset.delete}/`,{method:'DELETE'});currentPage=1;await load();}
-  if(t.dataset.vehicleHistory){const d=await api(`/api/orders/?vehicle=${t.dataset.vehicleHistory}`);$('detail-title').textContent='Історія обслуговування';$('detail-content').innerHTML=d.results.map(o=>`<p><button data-history-order="${o.id}">${e(o.number)} · ${e(o.status_label)}</button> ${e(o.complaint)}</p>`).join('')||'<p>Замовлень поки немає.</p>';$('detail').showModal();for(const b of $('detail-content').querySelectorAll('[data-history-order]'))b.onclick=()=>showOrder(b.dataset.historyOrder);}
+  if(t.dataset.vehicleHistory){const history=await allOptions('orders',`?vehicle=${t.dataset.vehicleHistory}`);$('detail-title').textContent='Історія обслуговування';$('detail-content').innerHTML=history.map(o=>`<p><button data-history-order="${o.id}">${e(o.number)} · ${e(o.status_label)}</button> ${e(o.complaint)}</p>`).join('')||'<p>Замовлень поки немає.</p>';$('detail').showModal();for(const b of $('detail-content').querySelectorAll('[data-history-order]'))b.onclick=()=>showOrder(b.dataset.historyOrder);}
 }catch(err){notice(err.message);}});
 for(const b of document.querySelectorAll('[data-view]'))b.onclick=()=>{view=b.dataset.view;currentPage=1;for(const n of document.querySelectorAll('[data-view]'))n.classList.toggle('active',n===b);$('page-title').textContent=titles[view][0];$('create').textContent='+ '+titles[view][1];$('search').value='';$('status-filter').hidden=view!=='orders';$('overdue').parentElement.hidden=view!=='orders';$('page-description').textContent=view==='orders'?'Від першого звернення до видачі автомобіля.':view==='customers'?'Контакти та примітки про клієнтів майстерні.':'Автомобілі та історія їхнього обслуговування.';notice('');load();};
 $('create').onclick=()=>edit();$('filters').onsubmit=ev=>{ev.preventDefault();currentPage=1;load();};$('prev').onclick=()=>{currentPage--;load();};$('next').onclick=()=>{currentPage++;load();};$('close-dialog').onclick=$('cancel').onclick=()=>$('editor').close();$('close-detail').onclick=()=>$('detail').close();

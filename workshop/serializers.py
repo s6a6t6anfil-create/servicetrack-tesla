@@ -11,8 +11,11 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class VehicleSerializer(serializers.ModelSerializer):
     customer_name = serializers.CharField(source='customer.name', read_only=True)
-    def validate_vin(self, value):
-        return value.upper()
+    def to_internal_value(self, data):
+        data = data.copy()
+        if isinstance(data.get("vin"), str):
+            data["vin"] = data["vin"].strip().upper()
+        return super().to_internal_value(data)
     class Meta:
         model = Vehicle
         fields = ['id', 'customer', 'customer_name', 'model', 'year', 'vin', 'plate', 'mileage']

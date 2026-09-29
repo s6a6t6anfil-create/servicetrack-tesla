@@ -9,7 +9,8 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ValidationError
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiParameter
+from rest_framework import serializers
 from .models import Customer, Vehicle, Order, OrderItem, Event
 from .serializers import CustomerSerializer, VehicleSerializer, OrderSerializer, ItemSerializer, EventSerializer, StatusSerializer, CommentSerializer
 from .services import is_manager, change_status
@@ -26,6 +27,7 @@ class ProtectedDeleteMixin:
             raise ValidationError({'detail': 'Запис має пов’язані дані. Спочатку опрацюй залежні записи.'})
 
 class CustomerViewSet(ProtectedDeleteMixin, viewsets.ModelViewSet):
+    queryset = Customer.objects.none()
     serializer_class = CustomerSerializer
     permission_classes = [ManagerWrite]
     search_fields = ['name', 'phone', 'email']
@@ -36,6 +38,7 @@ class CustomerViewSet(ProtectedDeleteMixin, viewsets.ModelViewSet):
         return qs
 
 class VehicleViewSet(ProtectedDeleteMixin, viewsets.ModelViewSet):
+    queryset = Vehicle.objects.none()
     serializer_class = VehicleSerializer
     permission_classes = [ManagerWrite]
     search_fields = ['vin', 'plate', 'customer__name']
@@ -51,6 +54,7 @@ class VehicleViewSet(ProtectedDeleteMixin, viewsets.ModelViewSet):
         return qs
 
 class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.none()
     serializer_class = OrderSerializer
     search_fields = ['vehicle__vin', 'vehicle__plate', 'vehicle__customer__name', 'complaint']
     http_method_names = ['get', 'post', 'patch', 'head', 'options']
@@ -114,6 +118,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Response(EventSerializer(event).data, status=201)
 
 class ItemViewSet(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.none()
     serializer_class = ItemSerializer
     permission_classes = [ManagerWrite]
     def get_queryset(self):
@@ -139,6 +144,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 def app(request):
     return render(request, 'app.html', {'manager': is_manager(request.user)})
 
+@extend_schema(responses=inline_serializer(name='SessionInfo', fields={'username': serializers.CharField(), 'manager': serializers.BooleanField(), 'mechanics': serializers.ListField(child=serializers.DictField()), 'statuses': serializers.ListField(child=serializers.DictField())}))
 @api_view(['GET'])
 def session_info(request):
     manager = is_manager(request.user)

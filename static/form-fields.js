@@ -1,0 +1,4 @@
+import {escapeHTML as e} from './helpers.js';
+export function input(name,label,value='',type='text',required=true,extra=''){return `<label>${e(label)}<input name="${name}" type="${type}" value="${e(value)}" ${required?'required':''} ${extra}></label>`;}
+export function area(name,label,value='',required=false){return `<label class="wide">${e(label)}<textarea name="${name}" ${required?'required':''}>${e(value)}</textarea></label>`;}
+export function select(name,label,options,value='',optional=false){return `<label>${e(label)}<select name="${name}" ${optional?'':'required'}>${optional?'<option value="">Не призначено</option>':'<option value="">Обери…</option>'}${options.map(o=>`<option value="${e(o.id)}" ${String(o.id)===String(value)?'selected':''}>${e(o.label)}</option>`).join('')}</select></label>`;}

@@ -6,3 +6,13 @@ __pycache__/
 .local-secret
 .coverage
 htmlcov/
+
+.demo-access.txt
+staticfiles/
+.DS_Store
+.env.*
+!.env.example
+*.sqlite3-*
+*.pem
+*.key
+backups/

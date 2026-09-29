@@ -14,7 +14,7 @@ class WorkshopTests(TestCase):
         self.other=get_user_model().objects.create_user('other',password='test')
         g=Group.objects.create(name='Механік');self.mechanic.groups.add(g);self.other.groups.add(g)
         self.customer=Customer.objects.create(name='Тест',phone='000')
-        self.vehicle=Vehicle.objects.create(customer=self.customer,model='Model Y',year=2023,vin='DEMO0000000000001')
+        self.vehicle=Vehicle.objects.create(customer=self.customer,model='Model Y',year=2023,vin='DEMX0000000000001')
         self.order=Order.objects.create(vehicle=self.vehicle,mechanic=self.mechanic,complaint='Огляд',due_date=timezone.localdate()-timedelta(days=1))
         self.client=APIClient();self.client.force_authenticate(self.admin)
     def test_anonymous_forbidden(self):
@@ -29,9 +29,9 @@ class WorkshopTests(TestCase):
         for vin in ['short','I'*17,self.vehicle.vin]:
             self.assertEqual(self.client.post('/api/vehicles/',{**base,'vin':vin}).status_code,400)
     def test_vehicle_normalizes_lowercase_vin(self):
-        result=self.client.post('/api/vehicles/',{'customer':self.customer.pk,'model':'Model Y','year':2023,'vin':'demo0000000000002'})
+        result=self.client.post('/api/vehicles/',{'customer':self.customer.pk,'model':'Model Y','year':2023,'vin':'demx0000000000002'})
         self.assertEqual(result.status_code,201)
-        self.assertEqual(result.data['vin'],'DEMO0000000000002')
+        self.assertEqual(result.data['vin'],'DEMX0000000000002')
     def test_mechanic_scope(self):
         self.client.force_authenticate(self.other)
         self.assertEqual(self.client.get('/api/orders/').data['count'],0)

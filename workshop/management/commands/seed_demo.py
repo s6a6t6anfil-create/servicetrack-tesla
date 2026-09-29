@@ -30,7 +30,7 @@ class Command(BaseCommand):
             ('Демо Олена', 'Model X', 'Плановий огляд гальм', 'ready'),
         ], 1):
             c = Customer.objects.create(name=name, phone=f'+38000000000{i}', email=f'demo{i}@example.invalid', notes='Вигадані демонстраційні дані')
-            v = Vehicle.objects.create(customer=c, model=model, year=2021+i, vin=f'DEMO00000000000{i:02}', plate=f'ДЕМО {i:04}', mileage=15000*i)
+            v = Vehicle.objects.create(customer=c, model=model, year=2021+i, vin=f'DEMX00000000000{i:02}', plate=f'ДЕМО {i:04}', mileage=15000*i)
             o = Order.objects.create(vehicle=v, mechanic=mechanic, complaint=complaint, status=state, due_date=timezone.localdate()+timedelta(days=i-3), diagnosis='Демонстраційний запис; не технічна рекомендація.')
             OrderItem.objects.create(order=o, kind='labor', name='Огляд автомобіля', quantity=Decimal('1'), unit_price=Decimal('800'))
             Event.objects.create(order=o, author=manager, kind='created', text=f'Демонстраційне замовлення: {o.get_status_display()}')
