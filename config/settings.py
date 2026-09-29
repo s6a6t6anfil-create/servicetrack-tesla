@@ -38,3 +38,5 @@ CSRF_COOKIE_SECURE = not DEBUG
 SECURE_SSL_REDIRECT = not DEBUG
 REST_FRAMEWORK = {'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication'], 'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'], 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', 'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter'], 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', 'PAGE_SIZE': 50, 'DEFAULT_THROTTLE_CLASSES': ['rest_framework.throttling.UserRateThrottle'], 'DEFAULT_THROTTLE_RATES': {'user': '600/min'}}
 SPECTACULAR_SETTINGS = {'TITLE': 'ServiceTrack Tesla API', 'VERSION': '0.1.0', 'DESCRIPTION': 'API для однієї незалежної майстерні Tesla. Сесійна автентифікація та CSRF.'}
+# Documentation-only enrichment: filters, CSRF, error responses and verified examples.
+SPECTACULAR_SETTINGS['POSTPROCESSING_HOOKS'] = ['drf_spectacular.hooks.postprocess_schema_enums', 'workshop.schema.document_api']
