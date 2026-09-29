@@ -5,7 +5,7 @@ const $ = id => document.getElementById(id);
 let view='orders', session, currentPage=1, lastResult, currentOrder;
 const titles={orders:['Замовлення','Нове замовлення'],customers:['Клієнти','Новий клієнт'],vehicles:['Автомобілі','Новий автомобіль']};
 const csrf=()=>document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))?.split('=')[1];
-let pending=0, loadVersion=0;
+let pending=0, loadVersion=0, detailVersion=0;
 const api=(path,options={})=>requestJSON(path,options,{csrf:csrf(),onBusy:busy=>{pending+=busy?1:-1;$('busy').hidden=pending===0;}});
 const send=(url,data,method='POST')=>api(url,{method,body:JSON.stringify(data)});
 function notice(text){$('notice').textContent=text;}
@@ -64,14 +64,20 @@ async function edit(record=null,kind=view){
   }catch(err){notice(err.message);}
 }
 async function showOrder(id){
+  const version=++detailVersion;
   try{
-    currentOrder=await api(`/api/orders/${id}/`);const o=currentOrder;const events=await api(`/api/orders/${id}/history/`);
+    const o=await api(`/api/orders/${id}/`);
+    if(version!==detailVersion)return;
+    const events=await api(`/api/orders/${id}/history/`);
+    if(version!==detailVersion)return;
+    // Publish the displayed record and mutation target together, after both reads succeed.
+    currentOrder=o;
     $('detail-title').textContent=`${o.number} · ${o.vehicle_label}`;
     $('detail-content').innerHTML=`<div class="detail-meta"><p><small>Клієнт</small>${e(o.customer_name)}</p><p><small>Статус</small>${e(o.status_label)}</p><p><small>Плановий строк</small>${e(o.due_date)}</p><p><small>Механік</small>${e(o.mechanic_name)}</p></div>${o.status==='delivered'?'<p class="closed-note">Замовлення видано. Редагування закрите; можна додати коментар.</p>':''}<h3>Звернення</h3><p>${e(o.complaint)}</p><h3>Діагностика та коди помилок</h3><p>${e(o.diagnosis)||'Поки немає запису'}</p><p>${e(o.fault_codes)}</p><div class="detail-actions">${o.status!=='delivered'?'<button id="edit-order">Редагувати</button>':''}${o.transitions.filter(s=>s.value!=='delivered'||session.manager).map(s=>`<button data-transition="${e(s.value)}">→ ${e(s.label)}</button>`).join('')}</div><h3>Попередній кошторис · ${money(o.total)}</h3><div class="table-scroll"><table><thead><tr><th>Позиція</th><th>Кількість × ціна</th><th></th></tr></thead><tbody>${o.items.map(i=>`<tr><td>${e(i.name)}<small>${i.kind==='labor'?'Робота':'Запчастина'}</small></td><td>${e(i.quantity)} × ${money(i.unit_price)}</td><td>${session.manager&&o.status!=='delivered'?`<button data-item-edit="${i.id}">Змінити</button> <button data-item-delete="${i.id}">Видалити</button>`:''}</td></tr>`).join('')||'<tr><td colspan="3">Позицій поки немає</td></tr>'}</tbody></table></div>${session.manager&&o.status!=='delivered'?'<p><button id="add-item">+ Додати позицію</button></p>':''}<h3>Історія та коментарі</h3>${events.map(h=>`<div class="event">${e(h.text)}<small>${e(h.author_name)} · ${new Date(h.created_at).toLocaleString('uk-UA')}</small></div>`).join('')}<form id="comment-form" class="comment-form"><input name="text" aria-label="Новий коментар" placeholder="Додати коментар…" maxlength="4000" required><button>Додати</button></form><p id="detail-error" class="error" role="alert"></p>`;
     if(!$('detail').open)$('detail').showModal();
     $('edit-order')?.addEventListener('click',()=>edit(o,'orders'));$('add-item')?.addEventListener('click',()=>edit(null,'items'));
     $('comment-form').onsubmit=async ev=>{ev.preventDefault();const button=ev.submitter;button.disabled=true;try{await send(`/api/orders/${id}/comment/`,Object.fromEntries(new FormData(ev.target)));await showOrder(id);}catch(err){$('detail-error').textContent=err.message;}finally{button.disabled=false;}};
-  }catch(err){notice(err.message);}
+  }catch(err){if(version===detailVersion)notice(err.message);}
 }
 $('detail-content').addEventListener('click',async ev=>{const t=ev.target;try{
   if(t.dataset.transition){t.disabled=true;await send(`/api/orders/${currentOrder.id}/transition/`,{status:t.dataset.transition});await showOrder(currentOrder.id);await load();}
